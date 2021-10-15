@@ -1,4 +1,3 @@
 package ECSE428Project.model;
 
-public enum RoundMode {
-}
+public enum RoundMode { Regular, Rapid }
