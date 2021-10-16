@@ -23,6 +23,7 @@ public class Account {
     private String email;
 
     private String name;
+    private String password;
     private boolean isVerified;
     private boolean isLoggedIn;
     private int score;
@@ -45,6 +46,7 @@ public class Account {
     public Account() {
         name = null;
         email = null;
+        password = null;
         isVerified = false;
         isLoggedIn = false;
         score = 0;
@@ -52,9 +54,10 @@ public class Account {
         accountMatches = new ArrayList<>();
     }
 
-    public Account(String aName, String aEmail, boolean verified, boolean loggedIn, int aScore, int aLevel) {
+    public Account(String aName, String aEmail, String aPassword, boolean verified, boolean loggedIn, int aScore, int aLevel) {
         name = aName;
         email = aEmail;
+        password = aPassword;
         isVerified = verified;
         isLoggedIn = loggedIn;
         score = aScore;
@@ -71,6 +74,8 @@ public class Account {
 
     public String getEmail() { return email; }
 
+    public String getPassword() { return password; }
+
     public boolean isLoggedIn() { return isLoggedIn; }
 
     public boolean isVerified() { return isVerified; }
@@ -85,6 +90,8 @@ public class Account {
     public void setName(String name) { this.name = name; }
 
     public void setEmail(String email) { this.email = email; }
+
+    public void setPassword(String password) { this.password = password; }
 
     public void setLoggedIn(boolean loggedIn) { isLoggedIn = loggedIn; }
 
