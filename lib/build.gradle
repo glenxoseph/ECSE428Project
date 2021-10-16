@@ -8,8 +8,14 @@
 
 plugins {
     // Apply the java-library plugin for API and implementation separation.
+    id 'org.springframework.boot' version '2.4.2'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java-library'
 }
+
+group = 'ca.mcgill.ecse428.fullMoon'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
 
 repositories {
     // Use Maven Central for resolving dependencies.
@@ -25,4 +31,32 @@ dependencies {
 
     // This dependency is used internally, and not exposed to consumers on their own compile classpath.
     implementation 'com.google.guava:guava:30.0-jre'
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-mail:2.4.3'
+    runtimeOnly 'org.postgresql:postgresql'
+
+    //h2 database testing
+    testImplementation group: 'com.h2database', name: 'h2', version: '1.4.200'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+task integrationTest(type:Test) {
+    useJUnitPlatform {
+        includeTags('IntegrationTest')
+    }
+}
+
+bootJar {
+    enabled = false
+}
+
+jar {
+    enabled = true
+}
+
+bootRun {
+    enabled = true
 }
