@@ -26,6 +26,7 @@
       <change beforePath="$PROJECT_DIR$/lib/src/main/java/ECSE428Project/dao/PlayerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/ECSE428Project/dao/PlayerRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/src/main/java/ECSE428Project/dao/QuestionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/ECSE428Project/dao/QuestionRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/src/main/java/ECSE428Project/dao/RoundRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/ECSE428Project/dao/RoundRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/java/ECSE428Project/model/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/ECSE428Project/model/Account.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/src/main/java/ECSE428Project/model/Leaderboard.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/ECSE428Project/model/Leaderboard.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/src/main/java/ECSE428Project/model/Match.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/ECSE428Project/model/Match.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/src/main/java/ECSE428Project/service/AccountService.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/ECSE428Project/service/AccountService.java" afterDir="false" />
@@ -290,12 +291,12 @@
     </configuration>
     <list>
       <item itemvalue="Gradle.ECSE428Project:lib [bootRun]" />
-      <item itemvalue="Spring Boot.TriviaGameApplication" />
-      <item itemvalue="JUnit.TriviaGameApplicationTest.contextLoads" />
-      <item itemvalue="JUnit.LibraryTest.testSomeLibraryMethod" />
       <item itemvalue="Gradle.ECSE428Project:lib [test]" />
       <item itemvalue="Gradle.ECSE428Project:lib [check]" />
+      <item itemvalue="JUnit.TriviaGameApplicationTest.contextLoads" />
+      <item itemvalue="JUnit.LibraryTest.testSomeLibraryMethod" />
       <item itemvalue="JUnit.TriviaGameApplicationTest" />
+      <item itemvalue="Spring Boot.TriviaGameApplication" />
     </list>
     <recent_temporary>
       <list>

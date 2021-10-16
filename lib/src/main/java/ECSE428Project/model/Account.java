@@ -20,10 +20,9 @@ public class Account {
     //------------------------
 
     @Id
-    private String id;
+    private String email;
 
     private String name;
-    private String email;
     private boolean isVerified;
     private boolean isLoggedIn;
     private int score;
@@ -44,7 +43,6 @@ public class Account {
     //------------------------
 
     public Account() {
-        id = null;
         name = null;
         email = null;
         isVerified = false;
@@ -54,8 +52,7 @@ public class Account {
         accountMatches = new ArrayList<>();
     }
 
-    public Account(String aId, String aName, String aEmail, boolean verified, boolean loggedIn, int aScore, int aLevel) {
-        id = aId;
+    public Account(String aName, String aEmail, boolean verified, boolean loggedIn, int aScore, int aLevel) {
         name = aName;
         email = aEmail;
         isVerified = verified;
@@ -69,8 +66,6 @@ public class Account {
     //------------------------
     // INTERFACE
     //------------------------
-
-    public String getId() { return id; }
 
     public String getName() { return name; }
 
@@ -86,8 +81,6 @@ public class Account {
 
     public List<Match> getAccountMatches() { return accountMatches; }
 
-
-    public void setId(String id) { this.id = id; }
 
     public void setName(String name) { this.name = name; }
 
