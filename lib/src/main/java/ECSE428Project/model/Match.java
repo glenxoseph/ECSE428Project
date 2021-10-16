@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table (name = "table")
+@Table (name = "match")
 public class Match {
 
     //------------------------
@@ -40,7 +40,7 @@ public class Match {
     private Player player;
 
     @LazyCollection(LazyCollectionOption.FALSE)
-    @OneToMany(mappedBy = "match")
+    @OneToMany
     private List<Round> rounds;
 
 

@@ -4,8 +4,62 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cdde0626-58fa-459a-86da-9cff45443852" name="Default Changelist" comment="">
+    <list default="true" id="a7539488-1195-4080-88a5-28d1a95576bd" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.travis.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.travis.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/lib/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/java/ECSE428Project/TriviaGameApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/ECSE428Project/TriviaGameApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/java/ECSE428Project/controller/AccountController.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/ECSE428Project/controller/AccountController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/java/ECSE428Project/controller/AnswerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/ECSE428Project/controller/AnswerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/java/ECSE428Project/controller/LeaderboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/ECSE428Project/controller/LeaderboardController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/java/ECSE428Project/controller/MatchController.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/ECSE428Project/controller/MatchController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/java/ECSE428Project/controller/PlayerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/ECSE428Project/controller/PlayerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/java/ECSE428Project/controller/QuestionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/ECSE428Project/controller/QuestionController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/java/ECSE428Project/controller/RoundController.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/ECSE428Project/controller/RoundController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/java/ECSE428Project/dao/AccountRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/ECSE428Project/dao/AccountRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/java/ECSE428Project/dao/AnswerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/ECSE428Project/dao/AnswerRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/java/ECSE428Project/dao/LeaderboardRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/ECSE428Project/dao/LeaderboardRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/java/ECSE428Project/dao/MatchRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/ECSE428Project/dao/MatchRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/java/ECSE428Project/dao/PlayerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/ECSE428Project/dao/PlayerRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/java/ECSE428Project/dao/QuestionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/ECSE428Project/dao/QuestionRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/java/ECSE428Project/dao/RoundRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/ECSE428Project/dao/RoundRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/java/ECSE428Project/model/Leaderboard.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/ECSE428Project/model/Leaderboard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/java/ECSE428Project/model/Match.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/ECSE428Project/model/Match.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/java/ECSE428Project/service/AccountService.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/ECSE428Project/service/AccountService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/java/ECSE428Project/service/AnswerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/ECSE428Project/service/AnswerService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/java/ECSE428Project/service/LeaderboardService.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/ECSE428Project/service/LeaderboardService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/java/ECSE428Project/service/MatchService.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/ECSE428Project/service/MatchService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/java/ECSE428Project/service/PlayerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/ECSE428Project/service/PlayerService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/java/ECSE428Project/service/QuestionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/ECSE428Project/service/QuestionService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/java/ECSE428Project/service/RoundService.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/java/ECSE428Project/service/RoundService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/test/java/ECSE428Project/LibraryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/test/java/ECSE428Project/LibraryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/test/java/ECSE428Project/TriviaGameApplicationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/test/java/ECSE428Project/TriviaGameApplicationTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/test/java/ECSE428Project/controller/AccountControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/test/java/ECSE428Project/controller/AccountControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/test/java/ECSE428Project/controller/AnswerControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/test/java/ECSE428Project/controller/AnswerControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/test/java/ECSE428Project/controller/LeaderboardControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/test/java/ECSE428Project/controller/LeaderboardControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/test/java/ECSE428Project/controller/MatchControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/test/java/ECSE428Project/controller/MatchControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/test/java/ECSE428Project/controller/PlayerControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/test/java/ECSE428Project/controller/PlayerControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/test/java/ECSE428Project/controller/QuestionControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/test/java/ECSE428Project/controller/QuestionControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/test/java/ECSE428Project/controller/RoundControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/test/java/ECSE428Project/controller/RoundControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/test/java/ECSE428Project/model/AccountTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/test/java/ECSE428Project/model/AccountTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/test/java/ECSE428Project/model/AnswerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/test/java/ECSE428Project/model/AnswerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/test/java/ECSE428Project/model/LeaderboardTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/test/java/ECSE428Project/model/LeaderboardTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/test/java/ECSE428Project/model/MatchTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/test/java/ECSE428Project/model/MatchTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/test/java/ECSE428Project/model/PlayerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/test/java/ECSE428Project/model/PlayerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/test/java/ECSE428Project/model/QuestionTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/test/java/ECSE428Project/model/QuestionTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/test/java/ECSE428Project/model/RoundTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/test/java/ECSE428Project/model/RoundTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/test/java/ECSE428Project/service/AccountServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/test/java/ECSE428Project/service/AccountServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/test/java/ECSE428Project/service/AnswerServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/test/java/ECSE428Project/service/AnswerServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/test/java/ECSE428Project/service/LeaderboardServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/test/java/ECSE428Project/service/LeaderboardServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/test/java/ECSE428Project/service/MatchServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/test/java/ECSE428Project/service/MatchServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/test/java/ECSE428Project/service/PlayerServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/test/java/ECSE428Project/service/PlayerServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/test/java/ECSE428Project/service/QuestionServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/test/java/ECSE428Project/service/QuestionServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/test/java/ECSE428Project/service/RoundServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/test/java/ECSE428Project/service/RoundServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/test/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/test/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,9 +74,45 @@
   <component name="ExternalProjectsManager">
     <system id="GRADLE">
       <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <task path="$PROJECT_DIR$/lib">
+          <activation />
+        </task>
         <projects_view>
           <tree_state>
-            <expand />
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="ECSE428Project" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="ECSE428Project" type="f1a62948:ProjectNode" />
+                <item name="lib" type="2d1252cf:ModuleNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="ECSE428Project" type="f1a62948:ProjectNode" />
+                <item name="lib" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="ECSE428Project" type="f1a62948:ProjectNode" />
+                <item name="lib" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="application" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="ECSE428Project" type="f1a62948:ProjectNode" />
+                <item name="lib" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="verification" type="c8890929:TasksNode$1" />
+              </path>
+            </expand>
             <select />
           </tree_state>
         </projects_view>
@@ -33,51 +123,31 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
-        <option value="Enum" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitSEFilterConfiguration">
-    <file-type-list>
-      <filtered-out-file-type name="LOCAL_BRANCH" />
-      <filtered-out-file-type name="REMOTE_BRANCH" />
-      <filtered-out-file-type name="TAG" />
-      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
-    </file-type-list>
+  <component name="ProblemsViewState">
+    <option name="selectedIndex" value="1" />
   </component>
-  <component name="GithubDefaultAccount">
-    <option name="defaultAccountId" value="b93c4012-ca5e-4c2f-a3b5-99b2bf7d83e2" />
-  </component>
-  <component name="ProjectId" id="1zWDRcSfk1pB8DXzPnO9NXOv1CK" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
-  <component name="ProjectViewState">
-    <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showLibraryContents" value="true" />
-  </component>
   <component name="PropertiesComponent">
-    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="Downloaded.Files.Path.Enabled" value="false" />
-    <property name="Repository.Attach.Annotations" value="false" />
-    <property name="Repository.Attach.JavaDocs" value="false" />
-    <property name="Repository.Attach.Sources" value="false" />
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="aspect.path.notification.shown" value="true" />
-    <property name="nodejs_package_manager_path" value="npm" />
-    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="ExpandSpringBootJavaOptionsPanel" value="true" />
+    <property name="RequestMappingsPanelOrder0" value="0" />
+    <property name="RequestMappingsPanelOrder1" value="1" />
+    <property name="RequestMappingsPanelWidth0" value="75" />
+    <property name="RequestMappingsPanelWidth1" value="75" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.34772182" />
-    <property name="settings.editor.selected.configurable" value="configurable.group.build" />
-    <property name="vue.rearranger.settings.migration" value="true" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.project.gradle" />
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Spring Boot.TriviaGameApplication">
     <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
@@ -91,50 +161,154 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="LibraryTest.testSomeLibraryMethod" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="ECSE428Project:lib [bootRun]" type="GradleRunConfiguration" factoryName="Gradle">
       <ExternalSystemSettings>
+        <option name="env">
+          <map>
+            <entry key="SPRING_DATASOURCE_URL" value="jdbc:postgresql://localhost:5432/fullmoon?user=dev&amp;password=dev" />
+          </map>
+        </option>
         <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/lib" />
         <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="--tests &quot;ECSE428Project.LibraryTest.testSomeLibraryMethod&quot;" />
+        <option name="scriptParameters" value="--stacktrace" />
         <option name="taskDescriptions">
           <list />
         </option>
         <option name="taskNames">
           <list>
-            <option value=":lib:test" />
+            <option value="bootRun" />
           </list>
         </option>
-        <option name="vmOptions" />
+        <option name="vmOptions" value="" />
       </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
+    <configuration name="ECSE428Project:lib [check]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/lib" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="check" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="ECSE428Project:lib [test]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/lib" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="test" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="LibraryTest.testSomeLibraryMethod" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ECSE428Project.lib.test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ECSE428Project.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="ECSE428Project" />
+      <option name="MAIN_CLASS_NAME" value="ECSE428Project.LibraryTest" />
+      <option name="METHOD_NAME" value="testSomeLibraryMethod" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TriviaGameApplicationTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ECSE428Project.lib.test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ECSE428Project.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="ECSE428Project" />
+      <option name="MAIN_CLASS_NAME" value="ECSE428Project.TriviaGameApplicationTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TriviaGameApplicationTest.contextLoads" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ECSE428Project.lib.test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ECSE428Project.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="ECSE428Project" />
+      <option name="MAIN_CLASS_NAME" value="ECSE428Project.TriviaGameApplicationTest" />
+      <option name="METHOD_NAME" value="contextLoads" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TriviaGameApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="ECSE428Project.lib.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="ECSE428Project.TriviaGameApplication" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="ALTERNATIVE_JRE_PATH" value="14" />
+      <envs>
+        <env name="SPRING_DATASOURCE_URL" value="jdbc:postgresql://localhost:5432/fullmoon?user=dev&amp;password=dev" />
+      </envs>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Gradle.ECSE428Project:lib [bootRun]" />
+      <item itemvalue="Spring Boot.TriviaGameApplication" />
+      <item itemvalue="JUnit.TriviaGameApplicationTest.contextLoads" />
+      <item itemvalue="JUnit.LibraryTest.testSomeLibraryMethod" />
+      <item itemvalue="Gradle.ECSE428Project:lib [test]" />
+      <item itemvalue="Gradle.ECSE428Project:lib [check]" />
+      <item itemvalue="JUnit.TriviaGameApplicationTest" />
+    </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.LibraryTest.testSomeLibraryMethod" />
+        <item itemvalue="JUnit.LibraryTest.testSomeLibraryMethod" />
+        <item itemvalue="JUnit.TriviaGameApplicationTest" />
+        <item itemvalue="Gradle.ECSE428Project:lib [check]" />
+        <item itemvalue="Gradle.ECSE428Project:lib [test]" />
+        <item itemvalue="JUnit.TriviaGameApplicationTest.contextLoads" />
       </list>
     </recent_temporary>
   </component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
-    <task active="true" id="Default" summary="Default task">
-      <changelist id="cdde0626-58fa-459a-86da-9cff45443852" name="Default Changelist" comment="" />
-      <created>1634254943623</created>
-      <option name="number" value="Default" />
-      <option name="presentableId" value="Default" />
-      <updated>1634254943623</updated>
-      <workItem from="1634254945554" duration="1906000" />
-      <workItem from="1634257258587" duration="23000" />
-      <workItem from="1634312458216" duration="3949000" />
-      <workItem from="1634323187561" duration="6443000" />
-    </task>
     <servers />
-  </component>
-  <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
