@@ -50,17 +50,7 @@ public class LoginService {
 
 
 
-    @Transactional
-    public Account getLoggedInUser(){
-        // Get all profiles in database and check which one is logged in
-        List<Account> allProfiles = toList(accountRepository.findAll());
-        for (Account profile : allProfiles) {
-            if (profile.isLoggedIn()) {
-                return profile;
-            }
-        }
-        throw new IllegalArgumentException("Not Logged In");
-    }
+
 
 
 
