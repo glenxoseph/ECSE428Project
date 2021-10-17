@@ -1,9 +1,13 @@
 package ECSE428Project.model;
 
+
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table (name = "question")
@@ -18,6 +22,9 @@ public class Question {
 
     private String askedQuestion;
     private String hint;
+
+    @ElementCollection
+    private List<String> acceptedAnswers;
 
 
     //------------------------
@@ -35,14 +42,16 @@ public class Question {
     public Question() {
         id = null;
         askedQuestion = null;
+        acceptedAnswers = new ArrayList<>();
         hint = null;
         player = null;
     }
 
-    public Question(String aId, String aAskedQuestion, String aHint, Player aPlayer) {
+    public Question(String aId, String anAskedQuestion, String aHint, List<String> someAcceptedAnswers, Player aPlayer) {
         id = aId;
-        askedQuestion = aAskedQuestion;
+        askedQuestion = anAskedQuestion;
         hint = aHint;
+        acceptedAnswers = someAcceptedAnswers;
         setPlayer(aPlayer);
     }
 
@@ -58,6 +67,8 @@ public class Question {
 
     public void setHint(String hint) { this.hint = hint; }
 
+    public void setAcceptedAnswers(List<String> acceptedAnswers) { this.acceptedAnswers = acceptedAnswers; }
+
     public void setPlayer(Player player) { this.player = player; }
 
     public String getId() { return id; }
@@ -65,6 +76,8 @@ public class Question {
     public String getAskedQuestion() { return askedQuestion; }
 
     public String getHint() { return hint; }
+
+    public List<String> getAcceptedAnswers() { return acceptedAnswers; }
 
     public Player getPlayer() { return player; }
 }
