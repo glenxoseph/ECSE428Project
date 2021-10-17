@@ -20,6 +20,8 @@ bin/
 
 ### IntelliJ IDEA ###
 .idea
+misc.xml
+workspace.xml
 *.iws
 *.iml
 *.ipr
