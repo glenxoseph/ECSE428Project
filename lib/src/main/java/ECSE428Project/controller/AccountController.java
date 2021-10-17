@@ -46,8 +46,8 @@ public class AccountController {
         return convertToDto(account);
     }
     
-  @PostMapping(path = { "/users/{id}/changePassword", "/users/{id}/changePassword/" })
-  public AccountDto changePassword(@PathVariable String id, @RequestBody Map<String, String> json)
+  @PostMapping(path = { "/users/{email}/changePassword", "/users/{email}/changePassword/" })
+  public AccountDto changePassword(@PathVariable String email, @RequestBody Map<String, String> json)
       throws ResponseStatusException {
 
     if (json == null) {
@@ -65,10 +65,10 @@ public class AccountController {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "New password cannot be null");
     }
 
-    Account account = accountService.changePassword(id, oldPass, newPass);
+    Account account = accountService.changePassword(email, oldPass, newPass);
 
     if (account == null) {
-      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No account associated to the email " + id + " exists");
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No account associated to the email " + email + " exists");
     }
     if (!account.getPassword().equals(newPass)) {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Old password did not match the record");

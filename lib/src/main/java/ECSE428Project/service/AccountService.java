@@ -38,8 +38,8 @@ public class AccountService {
     }
     
   @Transactional
-  public Account changePassword(String id, String oldPass, String newPass) {
-    Optional<Account> opt = accountRepository.findById(id);
+  public Account changePassword(String email, String oldPass, String newPass) {
+    Optional<Account> opt = accountRepository.findById(email);
     Account account;
     
     if (opt.isPresent()) {
