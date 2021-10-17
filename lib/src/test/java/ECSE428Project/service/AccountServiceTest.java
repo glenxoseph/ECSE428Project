@@ -23,6 +23,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 
 @ExtendWith(SpringExtension.class)
@@ -96,4 +97,55 @@ public class AccountServiceTest {
         // Verify that accountRepository.save() was never called
         verify(accountRepository, never()).save(any(Account.class));
     }
+    
+  @Test
+  public void testChangePassword() {
+    String name = "accountName1", email = "max@hotmail.com", oldPassword = "password1", newPassword = "password2";
+    Account account = new Account();
+    account.setName(name);
+    account.setEmail(email);
+    account.setPassword(oldPassword);
+
+    // mock repository call to mock there already being a value in the database with
+    // this email
+    when(accountRepository.findById(email)).thenReturn(Optional.of(account));
+    account = accountService.changePassword(email, oldPassword, newPassword);
+    assertEquals(email, account.getEmail());
+    assertEquals(newPassword, account.getPassword());
+    verify(accountRepository).save(any(Account.class));
+  }
+
+  @Test
+  public void testChangePasswordWrongEmail() {
+    String name = "accountName1", email = "this_email_doesnt_exist@hotmail.com", oldPassword = "password1", newPassword = "password2";
+    Account account = new Account();
+    account.setName(name);
+    account.setEmail(email);
+    account.setPassword(oldPassword);
+
+    // mock repository call to mock there not being a value in the database with
+    // this email
+    when(accountRepository.findById(email)).thenReturn(Optional.empty());
+    account = accountService.changePassword(email, oldPassword, newPassword);
+    assertNull(account);
+    verify(accountRepository, never()).save(any(Account.class));
+  }
+
+  @Test
+  public void testChangePasswordWrongPassword() {
+    String name = "accountName1", email = "max@hotmail.com", oldPassword = "password1", newPassword = "password2",
+        invalidPassword = "Password1";
+    Account account = new Account();
+    account.setName(name);
+    account.setEmail(email);
+    account.setPassword(oldPassword);
+
+    // mock repository call to mock there already being a value in the database with
+    // this email
+    when(accountRepository.findById(email)).thenReturn(Optional.of(account));
+    account = accountService.changePassword(email, invalidPassword, newPassword);
+    assertEquals(email, account.getEmail());
+    assertEquals(oldPassword, account.getPassword());
+    verify(accountRepository, never()).save(any(Account.class));
+  }
 }
