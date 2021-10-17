@@ -7,12 +7,15 @@ import ECSE428Project.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import static ECSE428Project.controller.DataTransferObjects.convertToDto;
+
+import java.util.Map;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -42,6 +45,36 @@ public class AccountController {
 
         return convertToDto(account);
     }
+    
+  @PostMapping(path = { "/users/{id}/changePassword", "/users/{id}/changePassword/" })
+  public AccountDto changePassword(@PathVariable String id, @RequestBody Map<String, String> json)
+      throws ResponseStatusException {
+
+    if (json == null) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Old and new password cannot be null");
+    }
+
+    String oldPass = json.get("oldPassword");
+    String newPass = json.get("newPassword");
+
+    if (oldPass == null) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Old password cannot be null");
+    }
+
+    if (newPass == null) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "New password cannot be null");
+    }
+
+    Account account = accountService.changePassword(id, oldPass, newPass);
+
+    if (account == null) {
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No account associated to the email " + id + " exists");
+    }
+    if (!account.getPassword().equals(newPass)) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Old password did not match the record");
+    }
+    return convertToDto(account);
+  }
 
 
     private boolean validateAccountCreateDto(AccountCreateDto accountCreateDto) {

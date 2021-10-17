@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Optional;
 import java.util.regex.Pattern;
 
 @Service
@@ -35,6 +36,29 @@ public class AccountService {
         account = accountRepository.save(account);
         return account;
     }
+    
+  @Transactional
+  public Account changePassword(String id, String oldPass, String newPass) {
+    Optional<Account> opt = accountRepository.findById(id);
+    Account account;
+    
+    if (opt.isPresent()) {
+      account = opt.get();
+      
+      //if the oldpassword is correct, we make the change, otherwise the password stays the same
+      if (account.getPassword().equals(oldPass)) {
+        account.setPassword(newPass);
+        account = accountRepository.save(account);
+      }
+
+    } else {
+      //if no account with the id exists, return null
+      return null;
+    }
+
+    return account;
+
+  } 
 
 
 
