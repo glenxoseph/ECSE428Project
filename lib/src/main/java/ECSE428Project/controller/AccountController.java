@@ -9,7 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -76,6 +78,23 @@ public class AccountController {
     return convertToDto(account);
   }
 
+
+    /**
+     * This method updates an account's email
+     * @param oldEmail the old email associated to the account
+     * @param newEmail the new email to be associated to the account
+     * @param password the account's password
+     * @return updated account
+     * @throws ResponseStatusException if the account does not exist
+     */
+    @PutMapping(path = {"/account/changeEmail", "/account/changeEmail/"})
+    public AccountDto updateAccountWithNewEmail(@RequestParam("oldEmail") String oldEmail, @RequestParam("newEmail")
+            String newEmail, @RequestParam("password") String password) throws ResponseStatusException {
+
+        Account account = accountService.changeAccountEmail(oldEmail, newEmail, password);
+
+        return convertToDto(account);
+    }
 
     private boolean validateAccountCreateDto(AccountCreateDto accountCreateDto) {
         return (accountCreateDto.getEmail() != null

@@ -22,6 +22,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -166,4 +167,86 @@ public class AccountControllerTest {
         .andExpect(status().isBadRequest())
         .andExpect(status().reason("New password cannot be null"));
   }
+
+
+    @Test
+    public void testChangeAccountEmail() throws Exception {
+        Account account = TestUtilities.createAccount(1);
+        AccountCreateDto accountCreateDto = new AccountCreateDto();
+        accountCreateDto.setName(account.getName());
+        accountCreateDto.setEmail(account.getEmail());
+        accountCreateDto.setPassword(account.getPassword());
+
+        String newEmail = "newEmail@mail.com";
+
+        // Create the account to be tested
+        mockMvc.perform(post("/createAccount").content("{\n" +
+                "\"name\": \"" +accountCreateDto.getName()+ "\",\n" +
+                "\"email\": \"" +accountCreateDto.getEmail()+ "\",\n" +
+                "\"password\": \"" +accountCreateDto.getPassword()+ "\"\n" +
+                "}")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+        // Change the account's email
+        mockMvc.perform(put("/account/changeEmail")
+                .param("oldEmail", accountCreateDto.getEmail())
+                .param("newEmail", newEmail)
+                .param("password", accountCreateDto.getPassword())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(content().json("{\"name\":\"accountName1\",\"email\":\"newEmail@mail.com\",\"password\":\"password1\"}"));
+    }
+
+
+    @Test
+    public void testChangeAccountEmailInvalidEmail() throws Exception {
+        Account account = TestUtilities.createAccount(1);
+        AccountCreateDto accountCreateDto = new AccountCreateDto();
+        accountCreateDto.setName(account.getName());
+        accountCreateDto.setEmail(account.getEmail());
+        accountCreateDto.setPassword(account.getPassword());
+
+        String newEmail = "This is an invalid email";
+
+        // Create the account to be tested
+        mockMvc.perform(post("/createAccount").content("{\n" +
+                "\"name\": \"" +accountCreateDto.getName()+ "\",\n" +
+                "\"email\": \"" +accountCreateDto.getEmail()+ "\",\n" +
+                "\"password\": \"" +accountCreateDto.getPassword()+ "\"\n" +
+                "}")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+        // Change the account's email
+        mockMvc.perform(put("/account/changeEmail")
+                .param("oldEmail", accountCreateDto.getEmail())
+                .param("newEmail", newEmail)
+                .param("password", accountCreateDto.getPassword())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andExpect(status().reason("This is not a valid email address"));
+    }
+
+
+    @Test
+    public void testChangeAccountEmailInvalidAccount() throws Exception {
+        Account account = TestUtilities.createAccount(1);
+        AccountCreateDto accountCreateDto = new AccountCreateDto();
+        accountCreateDto.setName(account.getName());
+        accountCreateDto.setEmail(account.getEmail());
+        accountCreateDto.setPassword(account.getPassword());
+
+        String newEmail = "newEmail@mail.com";
+
+        // Do not post the account and try to change its email address
+        mockMvc.perform(put("/account/changeEmail")
+                .param("oldEmail", accountCreateDto.getEmail())
+                .param("newEmail", newEmail)
+                .param("password", accountCreateDto.getPassword())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andExpect(status().reason("This account does not exist"));
+    }
 }
