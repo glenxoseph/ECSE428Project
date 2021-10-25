@@ -229,6 +229,7 @@ public class AccountControllerTest {
                 .andExpect(status().reason("This is not a valid email address"));
     }
 
+
     @Test
     public void testChangeAccountEmailInvalidAccount() throws Exception {
         Account account = TestUtilities.createAccount(1);

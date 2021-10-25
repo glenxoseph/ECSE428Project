@@ -220,7 +220,7 @@ public class AccountServiceTest {
 
     @Test
     public void testChangeAccountEmailInvalidAccount() {
-        String oldEmail = "oldEmail@mail.com", newEmail = "newEmail@mail.com", password = "password", name = "name";
+        String oldEmail = "oldEmail@mail.com", newEmail = "newEmail@mail.com", password = "password";
 
         // Mock repository call to mock the fact that there is no account with that email address
         when(accountRepository.findById(oldEmail)).thenReturn(Optional.empty());

@@ -26,7 +26,6 @@ public class AccountController {
     @Autowired
     public AccountService accountService;
 
-
     /**
      * Creates an account with an email, a name, and a password
      * @param accountCreateDto an accountCreateDto

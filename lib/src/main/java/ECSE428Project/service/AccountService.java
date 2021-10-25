@@ -45,7 +45,7 @@ public class AccountService {
     if (opt.isPresent()) {
       account = opt.get();
       
-      //if the oldpassword is correct, we make the change, otherwise the password stays the same
+      //if the oldPassword is correct, we make the change, otherwise the password stays the same
       if (account.getPassword().equals(oldPass)) {
         account.setPassword(newPass);
         account = accountRepository.save(account);
