@@ -9,7 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -27,15 +29,14 @@ public class AccountController {
 
     /**
      * Creates an account with an email, a name, and a password
+     * @param accountCreateDto an accountCreateDto
+     * return an accountDto
+     * @throws ResponseStatusException if any part of the accountCreateDto is missing, or if the email is not correctly formed
      */
     @PostMapping(path = "/createAccount")
     public AccountDto createAccount(@RequestBody AccountCreateDto accountCreateDto) throws ResponseStatusException {
 
         // Verify that the input account is not null and that the input fields are correctly formed
-        if(accountCreateDto == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Account cannot be null");
-        }
-
         if(!validateAccountCreateDto(accountCreateDto)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid account");
         }
@@ -74,6 +75,23 @@ public class AccountController {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Old password did not match the record");
     }
     return convertToDto(account);
+  }
+
+    /**
+     * This method updates an account's email
+     * @param oldEmail the old email associated to the account
+     * @param newEmail the new email to be associated to the account
+     * @param password the account's password
+     * @return updated account
+     * @throws ResponseStatusException if the account does not exist
+     */
+  @PutMapping(path = {"/account/changeEmail", "/account/changeEmail/"})
+  public AccountDto updateAccountWithNewEmail(@RequestParam("oldEmail") String oldEmail, @RequestParam("newEmail")
+          String newEmail, @RequestParam("password") String password) throws ResponseStatusException {
+
+        Account account = accountService.changeAccountEmail(oldEmail, newEmail, password);
+
+        return convertToDto(account);
   }
 
 
