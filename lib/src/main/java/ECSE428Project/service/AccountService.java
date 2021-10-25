@@ -93,7 +93,7 @@ public class AccountService {
             }
 
         } else {
-            // If the account does not exist in the repository, return null
+            // If the account does not exist in the repository, throw an exception
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This account does not exist");
         }
 
