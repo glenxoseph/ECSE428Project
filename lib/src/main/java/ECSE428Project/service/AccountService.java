@@ -85,7 +85,8 @@ public class AccountService {
                 // Save the new account to the database
                 newAccount = accountRepository.save(newAccount);
 
-                // Insert method that deletes the old account here
+                // Delete the account with the old email
+                accountRepository.delete(account);
 
             } else {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The password is incorrect");
