@@ -148,4 +148,88 @@ public class AccountServiceTest {
     assertEquals(oldPassword, account.getPassword());
     verify(accountRepository, never()).save(any(Account.class));
   }
+
+
+    @Test
+    public void testChangeAccountEmail() {
+        String oldEmail = "oldEmail@mail.com", newEmail = "newEmail@mail.com", password = "password", name = "name";
+        Account account = new Account();
+        account.setName(name);
+        account.setEmail(oldEmail);
+        account.setPassword(password);
+
+        // mock repository call to mock there already being a value in the database with
+        // this email
+        when(accountRepository.findById(oldEmail)).thenReturn(Optional.of(account));
+
+        // Call the service method to change the account's email
+        account = accountService.changeAccountEmail(oldEmail, newEmail, password);
+
+        // Verify that the method returns the expected results
+        assertEquals(newEmail, account.getEmail());
+        assertEquals(name, account.getName());
+        verify(accountRepository).save(any(Account.class));
+    }
+
+
+    @Test
+    public void testChangeAccountIncorrectPassword() {
+        String oldEmail = "oldEmail@mail.com", newEmail = "newEmail@mail.com", password = "password",
+                wrongPassword = "wrongPassword", name = "name";
+        Account account = new Account();
+        account.setName(name);
+        account.setEmail(oldEmail);
+        account.setPassword(password);
+
+        // mock repository call to mock there already being a value in the database with
+        // this email
+        when(accountRepository.findById(oldEmail)).thenReturn(Optional.of(account));
+
+        // Verify that, when called, the method throws the expected exception
+        assertThrows(ResponseStatusException.class, () ->
+                        accountService.changeAccountEmail(oldEmail, newEmail, wrongPassword),
+                "The password is incorrect");
+
+        // Verify that no account was saved in the repository when the method was called
+        verify(accountRepository, never()).save(any(Account.class));
+    }
+
+
+    @Test
+    public void testChangeAccountEmailInvalidEmail() {
+        String oldEmail = "oldEmail@mail.com", newEmail = "This is an invalid email", password = "password", name = "name";
+        Account account = new Account();
+        account.setName(name);
+        account.setEmail(oldEmail);
+        account.setPassword(password);
+
+        // Mock repository call to mock there already being a value in the database with
+        // this email
+        when(accountRepository.findById(oldEmail)).thenReturn(Optional.of(account));
+
+        // Verify that, when called, the method throws the expected exception
+        assertThrows(ResponseStatusException.class, () ->
+                        accountService.changeAccountEmail(oldEmail, newEmail, password),
+                "This is not a valid email address");
+
+        // Verify that no account was saved in the repository when the method was called
+        verify(accountRepository, never()).save(any(Account.class));
+    }
+
+
+    @Test
+    public void testChangeAccountEmailInvalidAccount() {
+        String oldEmail = "oldEmail@mail.com", newEmail = "newEmail@mail.com", password = "password";
+
+        // Mock repository call to mock the fact that there is no account with that email address
+        when(accountRepository.findById(oldEmail)).thenReturn(Optional.empty());
+
+        // Verify that, when called, the method throws the expected exception
+        assertThrows(ResponseStatusException.class, () ->
+                        accountService.changeAccountEmail(oldEmail, newEmail, password),
+                "This account does not exist");
+
+        // Verify that no account was saved in the repository when the method was called
+        verify(accountRepository, never()).save(any(Account.class));
+    }
 }

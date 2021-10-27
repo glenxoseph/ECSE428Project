@@ -58,24 +58,47 @@ public class AccountService {
 
     return account;
 
-  } 
-  
-  /**
-   * Validates that an email and password are associated to an existing account
-   * @param email the email of the account
-   * @param password the password of the account
-   * @return true if there is an account with the given email and password. False otherwise.
-   */
-  @Transactional
-  public boolean validatePassword(String email, String password) {
-    Optional<Account> optAccount = accountRepository.findById(email);
-    if(optAccount.isEmpty()) {
-      return false;
-    }
-    return optAccount.get().getPassword().equals(password);
   }
 
 
+  @Transactional
+  public Account changeAccountEmail(String oldEmail, String newEmail, String password) {
+        Optional<Account> opt = accountRepository.findById(oldEmail);
+        Account account;
+        Account newAccount;
+
+        // Check if the new email is well formed
+        if(!VALID_EMAIL_REGEX.matcher(newEmail).matches()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This is not a valid email address");
+        }
+
+        if (opt.isPresent()) {
+            account = opt.get();
+
+            // The password needs to be checked for the email to be changed
+            if (account.getPassword().equals(password)) {
+
+                // Create a new account with the same properties as the old account but with a different email
+                newAccount = new Account(account.getName(), newEmail, account.getPassword(), account.isVerified(),
+                        account.isLoggedIn(), account.getScore(), account.getLevel());
+
+                // Save the new account to the database
+                newAccount = accountRepository.save(newAccount);
+
+                // Delete the account with the old email
+                accountRepository.delete(account);
+
+            } else {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The password is incorrect");
+            }
+
+        } else {
+            // If the account does not exist in the repository, throw an exception
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This account does not exist");
+        }
+
+        return newAccount;
+    }
 
 
     private static final Pattern VALID_EMAIL_REGEX = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$",
