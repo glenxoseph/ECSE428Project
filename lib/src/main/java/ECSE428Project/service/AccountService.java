@@ -59,6 +59,21 @@ public class AccountService {
     return account;
 
   } 
+  
+  /**
+   * Validates that an email and password are associated to an existing account
+   * @param email the email of the account
+   * @param password the password of the account
+   * @return true if there is an account with the given email and password. False otherwise.
+   */
+  @Transactional
+  public boolean validatePassword(String email, String password) {
+    Optional<Account> optAccount = accountRepository.findById(email);
+    if(optAccount.isEmpty()) {
+      return false;
+    }
+    return optAccount.get().getPassword().equals(password);
+  }
 
 
 
