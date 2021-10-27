@@ -99,6 +99,15 @@ public class AccountService {
 
         return newAccount;
     }
+  
+  @Transactional
+  public boolean validatePassword(String email, String password) {
+	  Optional<Account> optAccount = accountRepository.findById(email);
+	  if(optAccount.isPresent() && optAccount.get().getPassword().equals(password)) {
+		  return true;
+	  }
+	  return false;
+  }
 
 
     private static final Pattern VALID_EMAIL_REGEX = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$",
