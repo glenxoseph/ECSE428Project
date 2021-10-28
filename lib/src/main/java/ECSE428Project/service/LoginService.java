@@ -23,19 +23,19 @@ public class LoginService {
     public Account profileLogin(String email, String password) {
 
         if (email == null || password == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Credentials cananot be empty! Please Enter Valid Credentials");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Credentials cannot be empty! Please Enter Valid Credentials");
         }
 
         Account profile = accountRepository.findAccountByEmail(email);
 
         if (profile == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No account assosciated to the provided credentials");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No account associated to the provided credentials");
         }
 
         // Checking if password is correct and account isn't logged in
         if (password.equals(profile.getPassword()) && !profile.isLoggedIn()) {
             profile.setLoggedIn(true);
-            accountRepository.save(profile);
+            profile = accountRepository.save(profile);
             return profile;
 
         } else if (profile.isLoggedIn()) {
