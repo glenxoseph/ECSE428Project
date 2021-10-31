@@ -1,6 +1,7 @@
 package ECSE428Project.service;
 
 import ECSE428Project.dao.AccountRepository;
+import ECSE428Project.dto.AccountDto;
 import ECSE428Project.model.Account;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,8 +37,39 @@ public class AccountService {
         account = accountRepository.save(account);
         return account;
     }
-    
-  @Transactional
+
+    @Transactional
+    public void deleteAccount(String email, String password) {
+        if (email == null) {
+            throw new IllegalArgumentException("No account assosciated to this email");
+        }else{
+            // Delete a new account with the input id
+            Account account = accountRepository.findAccountByEmail(email);
+
+            if (account == null) {
+                throw new IllegalArgumentException("Account does not exist");
+            }
+            if (!account.isLoggedIn()) {
+                throw new IllegalArgumentException("Not Logged in");
+            }
+
+            if(!account.getPassword().equals(password)){
+                throw new IllegalArgumentException("Incorrect Password Provided");
+
+            }
+
+
+            accountRepository.delete(account);
+        }
+
+
+
+    }
+
+
+
+
+    @Transactional
   public Account changePassword(String email, String oldPass, String newPass) {
     Optional<Account> opt = accountRepository.findById(email);
     Account account;

@@ -6,13 +6,7 @@ import ECSE428Project.model.Account;
 import ECSE428Project.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import static ECSE428Project.controller.DataTransferObjects.convertToDto;
@@ -46,6 +40,15 @@ public class AccountController {
         Account account = accountService.createAccount(accountCreateDto.getName(), accountCreateDto.getEmail(), accountCreateDto.getPassword());
 
         return convertToDto(account);
+    }
+
+
+    /**
+     * Deletes an account
+     */
+    @DeleteMapping(value = { "/deleteAccount/{email}", "/deleteAccount/{email}/" })
+    public void deleteAccount(@PathVariable("email") String email,@RequestParam("password") String password)  throws IllegalArgumentException {
+       accountService.deleteAccount(email,password);
     }
     
   @PostMapping(path = { "/users/{email}/changePassword", "/users/{email}/changePassword/" })
