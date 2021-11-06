@@ -6,6 +6,8 @@ ECSE428Project/model/Answer.java
  ECSE428Project.model.Answer
 ECSE428Project/controller/LeaderboardController.java
  ECSE428Project.controller.LeaderboardController
+ECSE428Project/model/AdminConfig.java
+ ECSE428Project.model.AdminConfig
 ECSE428Project/model/Match.java
  ECSE428Project.model.Match
 ECSE428Project/model/Question.java
@@ -14,6 +16,8 @@ ECSE428Project/service/PlayerService.java
  ECSE428Project.service.PlayerService
 ECSE428Project/dao/PlayerRepository.java
  ECSE428Project.dao.PlayerRepository
+ECSE428Project/service/AdminConfigService.java
+ ECSE428Project.service.AdminConfigService
 ECSE428Project/service/RoundService.java
  ECSE428Project.service.RoundService
 ECSE428Project/model/Round.java
@@ -38,6 +42,8 @@ ECSE428Project/TriviaGameApplication.java
  ECSE428Project.TriviaGameApplication
 ECSE428Project/model/GameMode.java
  ECSE428Project.model.GameMode
+ECSE428Project/controller/AdminConfigController.java
+ ECSE428Project.controller.AdminConfigController
 ECSE428Project/controller/QuestionController.java
  ECSE428Project.controller.QuestionController
 ECSE428Project/model/Account.java
@@ -48,6 +54,8 @@ ECSE428Project/dao/MatchRepository.java
  ECSE428Project.dao.MatchRepository
 ECSE428Project/controller/AnswerController.java
  ECSE428Project.controller.AnswerController
+ECSE428Project/dao/AdminConfigRepository.java
+ ECSE428Project.dao.AdminConfigRepository
 ECSE428Project/controller/LogoutController.java
  ECSE428Project.controller.LogoutController
 ECSE428Project/dao/LeaderboardRepository.java

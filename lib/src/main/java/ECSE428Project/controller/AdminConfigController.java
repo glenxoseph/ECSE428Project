@@ -27,7 +27,7 @@ public class AdminConfigController {
 
 	@GetMapping(path = { "/configs/admins", "/configs/banned/admins/" })
 	public List<String> getAdminEmails() throws ResponseStatusException {
-		return adminConfigService.getBannedEmails();
+		return adminConfigService.getAdminEmails();
 	}
 
 	@PostMapping(path = { "/configs/ban/{emailToBan}", "/configs/ban/{emailToBan}/" })
