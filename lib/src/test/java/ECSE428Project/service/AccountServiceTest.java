@@ -43,6 +43,7 @@ public class AccountServiceTest {
             return invocation.getArgument(0);
         };
         when(accountRepository.save(any(Account.class))).thenAnswer(returnParameterAsAnswer);
+
     }
 
     @Test
@@ -232,4 +233,26 @@ public class AccountServiceTest {
         // Verify that no account was saved in the repository when the method was called
         verify(accountRepository, never()).save(any(Account.class));
     }
+
+
+    @Test
+    public void DeleteAccountSuccessfully() {
+        String name = "accountName1", email = "salmanmesamali@hotmail.com", oldPassword = "password1";
+        Account account = new Account();
+        account.setName(name);
+        account.setEmail(email);
+        account.setPassword(oldPassword);
+        account.setLoggedIn(true);
+
+        // mock repository call to mock there already being a value in the database with
+        // this email
+         when(accountRepository.findById(email)).thenReturn(Optional.of(account));
+
+        accountService.deleteAccount(email,oldPassword);
+       verify(accountRepository).delete(any(Account.class));
+
+
+    }
+
+
 }
