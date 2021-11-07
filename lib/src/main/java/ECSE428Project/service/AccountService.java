@@ -44,7 +44,9 @@ public class AccountService {
             throw new IllegalArgumentException("No account assosciated to this email");
         }else{
             // Delete a new account with the input id
-            Account account = accountRepository.findAccountByEmail(email);
+            Optional<Account> opt = accountRepository.findById(email);
+            Account account = opt.get();
+
 
             if (account == null) {
                 throw new IllegalArgumentException("Account does not exist");
@@ -57,8 +59,6 @@ public class AccountService {
                 throw new IllegalArgumentException("Incorrect Password Provided");
 
             }
-
-
             accountRepository.delete(account);
         }
 
