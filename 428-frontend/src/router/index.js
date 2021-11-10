@@ -1,7 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Hello from '@/components/Hello'
-import ECSE428 from '@/components/ECSE428'
+import Game from '@/components/Game'
+import SignUp from '@/components/SignUp'
+import MatchHistory from '@/components/MatchHistory'
 
 Vue.use(Router)
 
@@ -13,9 +15,20 @@ export default new Router({
       component: Hello
     },
     {
-      path: '/app',
-      name: 'ECSE428',
-      component: ECSE428
+      path: '/game',
+      name: 'Game',
+      component: Game
+    },
+    {
+      path: '/signup',
+      name: 'SignUp',
+      component: SignUp
+    }
+    ,
+    {
+      path: '/matchhistory',
+      name: 'MatchHistory',
+      component: MatchHistory
     }
   ]
 })
