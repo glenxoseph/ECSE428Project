@@ -10,23 +10,26 @@
     <h4 class="m-5"> Delete Account </h4>
 
     <form class="m-5">
-      <label for="deleteAccount">Delete Account</label>
       <div class="mb-2 d-flex justify-content-center">
         <b-alert show variant="warning">By clicking the button, you give your consent to delete the account.</b-alert>
       </div>
-       <label for="currentEmail">Current Email</label>
+       <label>Current Email</label>
       <div class="mb-2 d-flex justify-content-center">
-        <b-form-input type="email" class="form-control" style="width: 40%;" id="currentEmail" placeholder="Current Email" />
+        <b-form-input v-model="email" type="email" class="form-control" style="width: 40%;" placeholder="Current Email" />
       </div>
-      <label for="password">Password</label>
+      <label>Password</label>
       <div class="mb-2 d-flex justify-content-center">
-        <b-form-input v-model="inputPassword" type="password" class="form-control" style="width: 40%;" id="password" placeholder="Password"/>
+        <b-form-input v-model="password" type="password" class="form-control" style="width: 40%;" placeholder="Password"/>
       </div>
 
       <div class="m-5">
-        <b-button class="p3" type="submit" size="lg" variant="danger" v-on:click="deleteAccount">Confirm</b-button>
+        <b-button class="p3" type="submit" size="lg" variant="danger"
+                  :disabled="!email || !password"
+                  v-on:click="deleteAccount(email, password)">Confirm</b-button>
       </div>
     </form>
+
+    <p class="errorMessage" v-show="errorMessageVisibility">{{errorMessage}}</p>
 
   </div>
 
@@ -37,24 +40,34 @@
   export default {
     data() {
       return {
-        currentEmail: '',
+        email: '',
         password: '',
-        errors: []
+        errors: [],
+        errorMessage: '',
+        errorMessageVisibility: false,
       }
     },
 
     methods: {
-      deleteAccount() {
-        console.log("Email:" + currentEmail.value  + " password:" + password.value);
-
-        axios.get('http://localhost:8081/deleteAccount/' + currentEmail.value +'?password=' + password.value )
+      deleteAccount: function(email, password) {
+        axios.delete('http://localhost:8081/deleteAccount/' + email, {
+          params: {
+            password: password
+          }
+        })
           .then(response => {
-            if (response.status == 200) {
-              this.$router.push('/home')
-            }
+            console.log(response.data)
+            this.$router.push('/')
           })
-          .catch(e => {
-            this.errors.push(e)
+          .catch(error => {
+            console.log(error.response.data)
+            this.errorMessageVisibility = true
+            this.errorMessage = error.response.data.message
+            setTimeout(() => this.errorMessageVisibility = false, 4000)
+
+            if (this.errorMessage.indexOf('Password') > -1) {
+              this.password = ''
+            }
           })
       }
     }
