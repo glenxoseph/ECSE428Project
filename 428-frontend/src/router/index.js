@@ -1,6 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Hello from '@/components/Hello'
+import SignIn from '@/components/SignIn'
+import Home from '@/components/Home'
+import Settings from '@/components/Settings'
+import ChangePassword from '@/components/ChangePassword'
+import BannedAccounts from '@/components/BannedAccounts'
 import ECSE428 from '@/components/ECSE428'
 
 Vue.use(Router)
@@ -9,8 +13,28 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Hello',
-      component: Hello
+      name: 'SignIn',
+      component: SignIn
+    },
+    {
+      path: '/home',
+      name: 'Home',
+      component: Home
+    },
+    {
+      path: '/settings',
+      name: 'Settings',
+      component: Settings
+    },
+    {
+      path: '/changePassword',
+      name: 'ChangePassword',
+      component: ChangePassword
+    },
+    {
+      path: '/bannedAccounts',
+      name: 'BannedAccounts',
+      component: BannedAccounts
     },
     {
       path: '/app',

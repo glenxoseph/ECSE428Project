@@ -28,7 +28,7 @@ public class AdminConfigService {
 	public AdminConfig getDefaultConfig() {
 		Optional<AdminConfig> opt = adminConfigRepository.findById("default");
 		AdminConfig adminConfig;
-		if (opt.isEmpty()) {
+		if (!opt.isPresent()) {
 			adminConfig = createDefaultConfig();
 		} else {
 			adminConfig = opt.get();
@@ -49,6 +49,7 @@ public class AdminConfigService {
 	public AdminConfig createDefaultConfig() {
 		AdminConfig adminConfig = new AdminConfig();
 		adminConfig.setName("default");
+		adminConfig.addAdminEmail("admin@mail.com");
 		adminConfig = adminConfigRepository.save(adminConfig);
 		return adminConfig;
 	}
