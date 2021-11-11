@@ -20,7 +20,7 @@ public class MatchService {
     private MatchRepository matchRepository;
 
 	@Transactional
-	public List<Match> getAllMatches() {
+	public List<Match> findAll() {
 		return (List<Match>) matchRepository.findAll();
 	}
 }

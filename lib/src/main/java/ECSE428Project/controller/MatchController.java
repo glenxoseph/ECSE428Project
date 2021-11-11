@@ -21,6 +21,6 @@ public class MatchController {
 	
 	@GetMapping(path = { "/history/", "/history" })
 	public List<Match> AllMatches() throws ResponseStatusException {
-		return matchService.getAllMatches();
+		return matchService.findAll();
 	}
 }

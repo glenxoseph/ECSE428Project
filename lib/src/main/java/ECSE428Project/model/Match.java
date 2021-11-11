@@ -4,13 +4,11 @@ package ECSE428Project.model;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table (name = "match")
@@ -33,8 +31,8 @@ public class Match {
     // ASSOCIATIONS
     //------------------------
 
-    @ManyToOne(optional = false)
-    private Account account;
+    @ManyToMany(mappedBy = "match", fetch = FetchType.LAZY)
+    private Set<Account> account = new HashSet<>();
 
     @ManyToOne(optional = false)
     private Player player;
@@ -59,13 +57,12 @@ public class Match {
         rounds = new ArrayList<>();
     }
 
-    public Match(String aMatchId, String aWinnerId, String aWinnerName, GameMode aGameMode, Options someOptions, Account anAccount, Player aPlayer) {
+    public Match(String aMatchId, String aWinnerId, String aWinnerName, GameMode aGameMode, Options someOptions, Player aPlayer) {
         matchId = aMatchId;
         winnerId = aWinnerId;
         winnerName = aWinnerName;
         gameMode = aGameMode;
         options = someOptions;
-        setAccount(anAccount);
         setPlayer(aPlayer);
         rounds = new ArrayList<>();
     }
@@ -86,7 +83,7 @@ public class Match {
 
     public Options getOptions() { return options; }
 
-    public Account getAccount() { return account; }
+    public Set<Account> getAccounts() { return account; }
 
     public Player getPlayer() { return player; }
 
@@ -102,7 +99,7 @@ public class Match {
 
     public void setOptions(Options options) { this.options = options; }
 
-    public void setAccount(Account account) { this.account = account; }
+    public void setAccount(HashSet<Account> accounts) { this.account = accounts; }
 
     public void setPlayer(Player player) { this.player = player; }
 

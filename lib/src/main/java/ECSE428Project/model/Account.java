@@ -4,12 +4,11 @@ package ECSE428Project.model;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table (name = "account")
@@ -34,9 +33,9 @@ public class Account {
     // ASSOCIATIONS
     //------------------------
 
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @OneToMany(mappedBy = "account")
-    private List<Match> accountMatches;
+    //@LazyCollection(LazyCollectionOption.FALSE)
+    @ManyToMany(fetch = FetchType.LAZY)
+    private Set<Match> match = new HashSet<Match>();
 
 
     //------------------------
@@ -51,7 +50,7 @@ public class Account {
         isLoggedIn = false;
         score = 0;
         level = 0;
-        accountMatches = new ArrayList<>();
+        match = null;
     }
 
     public Account(String aName, String aEmail, String aPassword, boolean verified, boolean loggedIn, int aScore, int aLevel) {
@@ -62,7 +61,7 @@ public class Account {
         isLoggedIn = loggedIn;
         score = aScore;
         level = aLevel;
-        accountMatches = new ArrayList<>();
+        match = null;
     }
 
 
@@ -84,7 +83,7 @@ public class Account {
 
     public int getLevel() { return level; }
 
-    public List<Match> getAccountMatches() { return accountMatches; }
+    public Set<Match> getAccountMatches() { return match; }
 
 
     public void setName(String name) { this.name = name; }
@@ -101,6 +100,6 @@ public class Account {
 
     public void setLevel(int level) { this.level = level; }
 
-    public void setAccountMatches(List<Match> accountMatches) { this.accountMatches = accountMatches; }
+    public void setAccountMatches(Set<Match> match) { this.match = match; }
 }
 

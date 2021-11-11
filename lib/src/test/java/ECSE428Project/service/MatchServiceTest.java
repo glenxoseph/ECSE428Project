@@ -4,9 +4,11 @@ import static org.junit.jupiter.api.Assertions.assertLinesMatch;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
+import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +33,9 @@ public class MatchServiceTest {
 		String email1 = "admin1@hotmail.com", email2 = "admin2@hotmail.com", email3 = "admin3@hotmail.com";
 		Match defaultMatch = new Match();
 		Account testAccount = TestUtilities.createAccount(1);
+		Account testAccount2 = TestUtilities.createAccount(1);
         String accountName = "accountName1", accountEmail = "accountEmail1@a.ca", accountPassword = "password1";
-		defaultMatch.setAccount(testAccount);
+		defaultMatch.setAccount(new HashSet<Account>());
 		defaultMatch.setMatchId("0");
 		defaultMatch.setGameMode(GameMode.Solo);
 		defaultMatch.setOptions(Options.Easy);
@@ -42,7 +45,9 @@ public class MatchServiceTest {
 		defaultMatch.setRounds(roundList);
 		defaultMatch.setWinnerName("riad");
 		defaultMatch.setWinnerId("1");
-		when(matchService.getAllMatches().thenReturn(Optional.of(defaultMatch));
-		assertLinesMatch(matchService., list);
+		Assert.assertEquals(defaultMatch.getWinnerName(), "riad");
+		Assert.assertEquals(defaultMatch.getWinnerId(), "1");
+		Assert.assertEquals(defaultMatch.getMatchId(), "0");
+		Assert.assertEquals(defaultMatch.getGameMode(), GameMode.Solo);
 	}
 }
