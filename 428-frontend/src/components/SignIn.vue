@@ -21,9 +21,9 @@
 
     <label for="createAccount">Don't Have An Account?</label>
     <div class="d-flex justify-content-center">
-      <b-button size="sm" variant="dark" id="createAccount">Create An Account</b-button>
+      <b-button size="sm" variant="dark" id="createAccount" v-on:click="goToCreateAccountPage">Create An Account</b-button>
     </div>
-  
+
   </div>
 
 </template>
@@ -52,7 +52,10 @@
         .catch(e => {
           this.errors.push(e)
         })
-      }
+      },
+      goToCreateAccountPage() {
+        this.$router.push('/createAccount')
+  }
     }
   }
 
