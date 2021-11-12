@@ -34,7 +34,7 @@ public class LoginService {
             return profile;
 
         } else if (profile.isLoggedIn()) {
-            throw new IllegalArgumentException("Already Logged In");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Already Logged In");
         } else if (!password.equals(profile.getPassword())) {
             throw new IllegalArgumentException("Password did not match records");
         }

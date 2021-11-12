@@ -45,7 +45,6 @@ public class LoginServiceTest {
     @BeforeEach
     public void createDummyAccount() {
 
-        //cneinoncosdc
         //empty the repository
         accountRepository.deleteAll();
 

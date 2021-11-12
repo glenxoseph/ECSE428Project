@@ -52,7 +52,7 @@ public class LogoutService {
             return profile;
 
         } else if (!profile.isLoggedIn()) {
-            throw new IllegalArgumentException("Profile is not logged in. LogoutProfile service call failed.");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Profile is not logged in. LogoutProfile service call failed.");
         } else {
             return null;
         }
