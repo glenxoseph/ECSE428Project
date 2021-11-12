@@ -6,6 +6,7 @@ import Settings from '@/components/Settings'
 import ChangePassword from '@/components/ChangePassword'
 import BannedAccounts from '@/components/BannedAccounts'
 import ECSE428 from '@/components/ECSE428'
+import CreateAccount from "../components/CreateAccount";
 
 Vue.use(Router)
 
@@ -40,6 +41,11 @@ export default new Router({
       path: '/app',
       name: 'ECSE428',
       component: ECSE428
+    },
+    {
+      path: '/createAccount',
+      name: 'CreateAccount',
+      component: CreateAccount
     }
   ]
 })
