@@ -8,11 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.List;
-
-import static org.hibernate.internal.util.collections.ArrayHelper.toList;
-
-
 @Service
 public class LoginService {
 
@@ -47,12 +42,5 @@ public class LoginService {
             return null;
         }
     }
-
-
-
-
-
-
-
-
 }
+
