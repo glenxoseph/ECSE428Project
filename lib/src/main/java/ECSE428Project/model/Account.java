@@ -6,13 +6,14 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "account")
-@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class)
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "matches"})
 public class Account {
 
 	// ------------------------
@@ -33,7 +34,7 @@ public class Account {
 	// ASSOCIATIONS
 	// ------------------------
 
-	@ManyToMany(mappedBy = "accounts", fetch = FetchType.EAGER)
+	@ManyToMany(mappedBy = "accounts", fetch = FetchType.LAZY)
 	private Set<Match> matches;
 
 	// ------------------------

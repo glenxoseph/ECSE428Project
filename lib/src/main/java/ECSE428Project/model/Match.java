@@ -8,6 +8,7 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.Entity;
@@ -27,7 +28,6 @@ import java.util.Set;
 
 @Entity
 @Table (name = "match")
-@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class)
 public class Match {
 
     //------------------------
@@ -50,7 +50,7 @@ public class Match {
     //------------------------
 
     @Cascade(CascadeType.ALL)
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "match_account", joinColumns = { @JoinColumn(name = "match_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "account_id") })
     private Set<Account> accounts;
