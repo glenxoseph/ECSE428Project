@@ -4,6 +4,8 @@ import SignIn from '@/components/SignIn'
 import Home from '@/components/Home'
 import Settings from '@/components/Settings'
 import ChangePassword from '@/components/ChangePassword'
+import ChangeEmail from '@/components/ChangeEmail'
+import DeleteAccount from '@/components/DeleteAccount'
 import BannedAccounts from '@/components/BannedAccounts'
 import ECSE428 from '@/components/ECSE428'
 import CreateAccount from "../components/CreateAccount";
@@ -31,6 +33,16 @@ export default new Router({
       path: '/changePassword',
       name: 'ChangePassword',
       component: ChangePassword
+    },
+    {
+      path: '/changeEmail',
+      name: 'ChangeEmail',
+      component: ChangeEmail
+    },
+    {
+      path: '/deleteAccount',
+      name: 'DeleteAccount',
+      component: DeleteAccount
     },
     {
       path: '/bannedAccounts',
