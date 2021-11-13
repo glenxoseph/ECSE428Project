@@ -237,22 +237,58 @@ public class AccountServiceTest {
 
     @Test
     public void DeleteAccountSuccessfully() {
-        String name = "accountName1", email = "salmanmesamali@hotmail.com", oldPassword = "password1";
+        String name = "accountName1", email = "salmanmesamali@hotmail.com", password = "password1";
         Account account = new Account();
         account.setName(name);
         account.setEmail(email);
-        account.setPassword(oldPassword);
+        account.setPassword(password);
         account.setLoggedIn(true);
 
         // mock repository call to mock there already being a value in the database with
         // this email
          when(accountRepository.findById(email)).thenReturn(Optional.of(account));
 
-        accountService.deleteAccount(email,oldPassword);
-       verify(accountRepository).delete(any(Account.class));
-
-
+        accountService.deleteAccount(email,password);
+        verify(accountRepository).delete(any(Account.class));
     }
 
+
+    @Test
+    public void deleteAccountWrongPassword() {
+        String name = "accountName1", email = "salmanmesamali@hotmail.com", password = "password1";
+        Account account = new Account();
+        account.setName(name);
+        account.setEmail(email);
+        account.setPassword(password);
+        account.setLoggedIn(true);
+
+        // mock repository call to mock there already being a value in the database with
+        // this email
+        when(accountRepository.findById(email)).thenReturn(Optional.of(account));
+
+        // Verify that an exception is thrown when the wrong password is provided
+        assertThrows(ResponseStatusException.class, () ->
+                        accountService.deleteAccount(email, "wrongPassword"),
+                "Incorrect Password Provided");
+    }
+
+    @Test
+    public void deleteAccountWrongEmail() {
+        String name = "accountName1", email = "salmanmesamali@hotmail.com", password = "password1";
+        Account account = new Account();
+        account.setName(name);
+        account.setEmail(email);
+        account.setPassword(password);
+        account.setLoggedIn(true);
+
+        // mock repository call to mock there already being a value in the database with
+        // this email
+        when(accountRepository.findById(email)).thenReturn(Optional.of(account));
+
+        // Verify that an exception is thrown when the wrong password is provided
+        assertThrows(ResponseStatusException.class, () ->
+                        accountService.deleteAccount("wrongEmail", password),
+                "j");
+    }
 
 }

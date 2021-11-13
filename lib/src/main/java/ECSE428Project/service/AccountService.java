@@ -41,7 +41,7 @@ public class AccountService {
     @Transactional
     public void deleteAccount(String email, String password) {
         if (email == null) {
-            throw new IllegalArgumentException("No account associated to this email");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No account associated to this email");
         }else{
             // Delete a new account with the input id
             Optional<Account> opt = accountRepository.findById(email);
@@ -50,15 +50,15 @@ public class AccountService {
             if (opt.isPresent()) {
                 account = opt.get();
             } else {
-                throw new IllegalArgumentException("This account does not exist");
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"This account does not exist");
             }
 
             if (!account.isLoggedIn()) {
-                throw new IllegalArgumentException("Not Logged in");
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Not Logged in");
             }
 
             if(!account.getPassword().equals(password)){
-                throw new IllegalArgumentException("Incorrect Password Provided");
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Incorrect Password Provided");
 
             }
             accountRepository.delete(account);
