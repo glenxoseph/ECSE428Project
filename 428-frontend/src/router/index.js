@@ -4,8 +4,11 @@ import SignIn from '@/components/SignIn'
 import Home from '@/components/Home'
 import Settings from '@/components/Settings'
 import ChangePassword from '@/components/ChangePassword'
+import ChangeEmail from '@/components/ChangeEmail'
+import DeleteAccount from '@/components/DeleteAccount'
 import BannedAccounts from '@/components/BannedAccounts'
 import ECSE428 from '@/components/ECSE428'
+import CreateAccount from "../components/CreateAccount";
 
 Vue.use(Router)
 
@@ -32,6 +35,16 @@ export default new Router({
       component: ChangePassword
     },
     {
+      path: '/changeEmail',
+      name: 'ChangeEmail',
+      component: ChangeEmail
+    },
+    {
+      path: '/deleteAccount',
+      name: 'DeleteAccount',
+      component: DeleteAccount
+    },
+    {
       path: '/bannedAccounts',
       name: 'BannedAccounts',
       component: BannedAccounts
@@ -40,6 +53,11 @@ export default new Router({
       path: '/app',
       name: 'ECSE428',
       component: ECSE428
+    },
+    {
+      path: '/createAccount',
+      name: 'CreateAccount',
+      component: CreateAccount
     }
   ]
 })
