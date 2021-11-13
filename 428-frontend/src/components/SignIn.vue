@@ -1,21 +1,23 @@
 <template>
 
   <div>
-    <h1> Welcome to GameName </h1>
+    <h1> Welcome to Full Moon Trivia </h1>
 
     <h4 class="m-5"> Sign In </h4>
 
     <form class="m-5">
-      <label for="inputUsername">Email</label>
+      <label>Email</label>
       <div class="mb-2 d-flex justify-content-center">
         <b-form-input v-model="inputUsername" type="email" class="form-control" style="width: 40%;" id="inputUsername" placeholder="Email"/>
       </div>
-      <label for="inputPassword">Password</label>
+      <label>Password</label>
       <div class="mb-2 d-flex justify-content-center">
         <b-form-input v-model="inputPassword" type="password" class="form-control" style="width: 40%;" id="inputPassword" placeholder="Password"/>
       </div>
       <div class="m-3">
-       <b-button class="p3" type="submit" size="lg" variant="dark" v-on:click="getLogin">Sign In</b-button>
+       <b-button class="p3" type="submit" size="lg" variant="dark"
+                 :disabled="!inputUsername || !inputPassword"
+                 v-on:click="getLogin">Sign In</b-button>
       </div>
     </form>
 
@@ -23,6 +25,8 @@
     <div class="d-flex justify-content-center">
       <b-button size="sm" variant="dark" id="createAccount" v-on:click="goToCreateAccountPage">Create An Account</b-button>
     </div>
+
+    <p class="errorMessage" v-show="errorMessageVisibility">{{ errorMessage }}</p>
 
   </div>
 
@@ -35,22 +39,33 @@
       return {
         inputUsername: '',
         inputPassword: '',
-        errors: []
+        errors: [],
+        errorMessage: '',
+        errorMessageVisibility: false
       }
     },
 
     methods: {
       getLogin() {
-        console.log("username:" + inputUsername.value + " password:" + inputPassword.value);
         localStorage.setItem("username", inputUsername.value);
         axios.get('http://localhost:8081/login' + '?email=' + inputUsername.value + "&password=" + inputPassword.value)
         .then(response => {
-          if (response.status == 200) {
-            this.$router.push('/home')
-          }
+          console.log(response.data)
+          this.$router.push('/home')
         })
-        .catch(e => {
-          this.errors.push(e)
+        .catch(error => {
+          console.log(error.response.data.message)
+          this.errors.push(error)
+          this.errorMessageVisibility = true
+          this.errorMessage = error.response.data.message
+          setTimeout(() => this.errorMessageVisibility = false, 4000)
+
+          if(error.response.data.message.indexOf('Password') > -1) {
+            this.inputPassword = ''
+          } else {
+            this.inputPassword = ''
+            this.inputUsername = ''
+          }
         })
       },
       goToCreateAccountPage() {
@@ -61,4 +76,12 @@
 
 </script>
 
+<style>
+
+.errorMessage {
+  padding-top: 20px;
+  color: darkred;
+}
+
+</style>
 

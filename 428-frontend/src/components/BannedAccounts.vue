@@ -35,6 +35,10 @@
       </div>
     </form>
 
+    <p class="errorMessage" v-show="errorMessageVisibility">{{errorMessage}}</p>
+
+    <p class="successMessage" v-show="successMessageVisibility">{{successMessage}}</p>
+
   </div>
 
 </template>
@@ -45,29 +49,41 @@
     data() {
       return {
         banAccountEmail: '',
-        errors: []
+        errors: [],
+        errorMessage: '',
+        errorMessageVisibility: false,
+        successMessage: '',
+        successMessageVisibility: false
       }
     },
 
     methods: {
       banAccount() {
         console.log("banning email... " + banAccountEmail.value);
-        const body = { 
-            email: "admin@mail.com" , 
+        const body = {
+            email: "admin@mail.com" ,
             password: "password"
         };
         axios.post('http://localhost:8081/configs/ban/' + banAccountEmail.value, body)
         .then(response => {
-          console.log(banAccountEmail.value + " successfully banned.");
+          console.log(banAccountEmail.value + " successfully banned.")
+          console.log(response.data)
+          this.successMessageVisibility = true
+          this.successMessage = response.data.message
+          setTimeout(() => this.successMessageVisibility = false, 4000)
         })
-        .catch(e => {
-          this.errors.push(e)
+        .catch(error => {
+          console.log(error.response.data)
+          this.errorMessageVisibility = true
+          this.errorMessage = error.response.data.message
+          setTimeout(() => this.errorMessageVisibility = false, 4000)
+          this.banAccountEmail = ''
         })
       },
       unbanAccount() {
         console.log("unbanning email... " + unbanAccountEmail.value);
-        const body = { 
-            email: "admin@mail.com" , 
+        const body = {
+            email: "admin@mail.com" ,
             password: "password"
         };
         axios.post('http://localhost:8081/configs/unban/' + unbanAccountEmail.value, body)
@@ -82,3 +98,15 @@
   }
 
 </script>
+
+<style>
+
+.errorMessage {
+  color: darkred;
+}
+
+.successMessage {
+  color: green;
+}
+
+</style>
