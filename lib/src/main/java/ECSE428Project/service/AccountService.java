@@ -146,7 +146,7 @@ public class AccountService {
       Optional<Account> optAccount = accountRepository.findById(email);
       Account account;
 
-      // Check that the account exists
+      // Check that the account exists in the database
       if (optAccount.isPresent()){
           account = optAccount.get();
 
@@ -160,6 +160,26 @@ public class AccountService {
 
       return account;
   }
+
+    @Transactional
+    public Account assignRankToAccount(String email, Integer rank) {
+        Optional<Account> optAccount = accountRepository.findById(email);
+        Account account;
+
+        // Check that the account exists in the database
+        if (optAccount.isPresent()){
+            account = optAccount.get();
+
+            // Set the new rank to the account
+            account.setLevel(rank);
+
+        } else {
+            // Throw exception if the account doesn't exist
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This account does not exist");
+        }
+
+        return account;
+    }
 
 
     private static final Pattern VALID_EMAIL_REGEX = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$",
