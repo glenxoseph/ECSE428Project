@@ -15,7 +15,7 @@ public class LoginService {
     private AccountRepository accountRepository;
 
     @Transactional
-    public Account profileLogin(String email, String password) {
+    public Account profileLogin(String email, String password) throws ResponseStatusException {
 
         if (email == null || password == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Credentials cannot be empty! Please Enter Valid Credentials");
@@ -36,11 +36,10 @@ public class LoginService {
         } else if (profile.isLoggedIn()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Already Logged In");
         } else if (!password.equals(profile.getPassword())) {
-            throw new IllegalArgumentException("Password did not match records");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Password did not match records");
         }
         else {
             return null;
         }
     }
 }
-

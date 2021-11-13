@@ -10,8 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -76,7 +75,8 @@ public class LogoutControllerTest {
     public void testLogoutSuccessful() throws Exception {
 
         Account profile = accountRepository.findAccountByEmail(loggedInEmail);
-        System.out.println("At the start of the test, the Account is logged in? " + profile.isLoggedIn());
+        boolean before = profile.isLoggedIn();
+        System.out.println("At the start of the test, the Account is logged in? " + before);
 
         mockMvc.perform(get("/logout")
                 .param("email", profile.getEmail())
@@ -84,7 +84,10 @@ public class LogoutControllerTest {
                 .andExpect(status().isOk());
 
         profile = accountRepository.findAccountByEmail(loggedInEmail);
-        System.out.println("At the end of the test, the Account is logged in? " + profile.isLoggedIn());
+        boolean after = profile.isLoggedIn();
+        System.out.println("At the end of the test, the Account is logged in? " + after);
+
+        assertNotEquals(before, after, "LogoutController testLogoutSuccessful failed. User login status was not changed.");
     }
 
 
@@ -92,7 +95,8 @@ public class LogoutControllerTest {
     public void testAlreadyLoggedOut() throws Exception {
 
         Account profile = accountRepository.findAccountByEmail(accountEmail);
-        System.out.println("At the start of the test, the Account is logged in? " + profile.isLoggedIn());
+        boolean before = profile.isLoggedIn();
+        System.out.println("At the start of the test, the Account is logged in? " + before);
 
         mockMvc.perform(get("/logout")
                         .param("email", profile.getEmail())
@@ -101,6 +105,9 @@ public class LogoutControllerTest {
                 .andExpect(status().reason("Profile is not logged in. LogoutProfile service call failed."));
 
         profile = accountRepository.findAccountByEmail(accountEmail);
-        System.out.println("At the end of the test, the Account is logged in? " + profile.isLoggedIn());
+        boolean after = profile.isLoggedIn();
+        System.out.println("At the end of the test, the Account is logged in? " + after);
+
+        assertEquals(before, after, "LogoutController testAlreadyLoggedOut failed. User login status was changed.");
     }
 }

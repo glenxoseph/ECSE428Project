@@ -1,31 +1,18 @@
 package ECSE428Project.controller;
 
 import ECSE428Project.dao.AccountRepository;
-import ECSE428Project.dto.AccountDto;
 import ECSE428Project.model.Account;
-import ECSE428Project.model.TestUtilities;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import org.junit.jupiter.api.*;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import java.util.Optional;
 
 @Tag("IntegrationTest")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
@@ -88,7 +75,8 @@ public class LoginControllerTest {
     public void testLoginSuccessful() throws Exception {
 
         Account profile = accountRepository.findAccountByEmail(accountEmail);
-        System.out.println("At the start of the test, the Account is logged in? " + profile.isLoggedIn());
+        boolean before = profile.isLoggedIn();
+        System.out.println("At the start of the test, the Account is logged in? " + before);
 
         mockMvc.perform(get("/login")
                 .param("email", profile.getEmail())
@@ -97,7 +85,10 @@ public class LoginControllerTest {
                 .andExpect(status().isOk());
 
         profile = accountRepository.findAccountByEmail(accountEmail);
-        System.out.println("At the end of the test, the Account is logged in? " + profile.isLoggedIn());
+        boolean after = profile.isLoggedIn();
+        System.out.println("At the end of the test, the Account is logged in? " + after);
+
+        assertNotEquals(before, after, "LoginController testLoginSuccessful failed. User login status was not changed.");
     }
 
 
@@ -105,7 +96,8 @@ public class LoginControllerTest {
     public void testAlreadyLoggedIn() throws Exception {
 
         Account profile = accountRepository.findAccountByEmail(wrongEmail);
-        System.out.println("At the start of the test, the Account is logged in? " + profile.isLoggedIn());
+        boolean before = profile.isLoggedIn();
+        System.out.println("At the start of the test, the Account is logged in? " + before);
 
         mockMvc.perform(get("/login")
                         .param("email", profile.getEmail())
@@ -115,6 +107,9 @@ public class LoginControllerTest {
                 .andExpect(status().reason("Already Logged In"));
 
         profile = accountRepository.findAccountByEmail(wrongEmail);
-        System.out.println("At the end of the test, the Account is logged in? " + profile.isLoggedIn());
+        boolean after = profile.isLoggedIn();
+        System.out.println("At the end of the test, the Account is logged in? " + after);
+
+        assertEquals(before, after, "LoginController testAlreadyLoggedIn failed. User login status was changed.");
     }
 }

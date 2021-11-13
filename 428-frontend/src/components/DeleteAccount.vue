@@ -30,6 +30,7 @@
     </form>
 
     <p class="errorMessage" v-show="errorMessageVisibility">{{errorMessage}}</p>
+    <p class="successMessage" v-show="successMessageVisibility">{{successMessage}}</p>
 
   </div>
 
@@ -45,11 +46,20 @@
         errors: [],
         errorMessage: '',
         errorMessageVisibility: false,
+        successMessage: '',
+        successMessageVisibility: false,
       }
     },
 
     methods: {
       deleteAccount: function(email, password) {
+        if(!(email == localStorage.getItem("username"))) {
+          this.errorMessageVisibility = true
+          this.errorMessage = "This email address is not associated to this account."
+          setTimeout(() => this.errorMessageVisibility = false, 4000)
+          this.email = ''
+          this.password = ''
+        } else {
         axios.delete('http://localhost:8081/deleteAccount/' + email, {
           params: {
             password: password
@@ -57,7 +67,9 @@
         })
           .then(response => {
             console.log(response.data)
-            this.$router.push('/')
+            this.successMessageVisibility = true
+            this.successMessage = "Your account has been deleted successfully, you will be redirected to the login page."
+            setTimeout(() => this.successMessageVisibility = false + this.$router.push('/'), 4000)
           })
           .catch(error => {
             console.log(error.response.data)
@@ -70,8 +82,21 @@
             }
           })
       }
+      }
     }
   }
 
 </script>
+
+<style>
+
+.errorMessage {
+  color: darkred;
+}
+
+.successMessage {
+  color: green;
+}
+
+</style>
 

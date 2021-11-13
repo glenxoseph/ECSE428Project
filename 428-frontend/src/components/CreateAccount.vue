@@ -77,6 +77,7 @@ export default {
           })
           .then(response => {
             console.log(response.data)
+            console.log(localStorage.getItem("username"))
             this.$router.push('/home')
           })
           .catch(error => {

@@ -19,7 +19,7 @@ public class LogoutController {
     //Logging out
 	@GetMapping(value = { "/logout", "/logout/" })
 	public AccountDto logoutProfile(@RequestParam("email") String email)
-            throws IllegalArgumentException, ResponseStatusException {
+            throws ResponseStatusException {
 
         if (!logoutService.profileLogout(email).isLoggedIn()) {
 			return convertToDTO(email, false);

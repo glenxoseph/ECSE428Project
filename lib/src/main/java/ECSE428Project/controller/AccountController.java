@@ -99,6 +99,51 @@ public class AccountController {
         return convertToDto(account);
     }
 
+    /**
+     * This method updates the score associated to an account
+     * @param email the email associated to the account
+     * @param scoreString the score that is going to be assigned to the account as a String
+     * @return updated account
+     * @throws ResponseStatusException if the score is not a number
+     */
+    @PutMapping(path = "/account/email/score")
+    public AccountDto assignScoreToAccount(@RequestParam("email") String email, @RequestParam("score") String scoreString)
+            throws ResponseStatusException {
+
+        try {
+            Double.parseDouble(scoreString);
+        } catch (NumberFormatException error) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The score is not a number.");
+        }
+
+        return null;
+        // These lines will be uncommented when the service method is added
+        //Account account = accountService.assignScoreToAccount(email, Double.parseDouble(scoreString));
+        //return convertToDto(account);
+    }
+
+    /**
+     * This method updates the rank associated to an account
+     * @param email the email associated to the account
+     * @param rankString the rank that is going to be assigned to the account as a String
+     * @return updated account
+     * @throws ResponseStatusException if the rank is not a number
+     */
+    @PutMapping(path = "/account/email/rank")
+    public AccountDto assignRankToAccount(@RequestParam("email") String email, @RequestParam("rank") String rankString)
+            throws ResponseStatusException {
+        try {
+            Integer.parseInt(rankString);
+        } catch (NumberFormatException error) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The rank is not a number.");
+        }
+
+        return null;
+        // These lines will be uncommented when the service method is added
+        //Account account = accountService.assignRankToAccount(email, Integer.parseInt(rankString);
+        //return convertToDto(account);
+    }
+
     private boolean validateAccountCreateDto(AccountCreateDto accountCreateDto) {
         return (accountCreateDto.getEmail() != null
                 && accountCreateDto.getEmail().trim().length() > 0

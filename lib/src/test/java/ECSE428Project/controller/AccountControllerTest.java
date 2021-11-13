@@ -21,6 +21,8 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -245,6 +247,104 @@ public class AccountControllerTest {
                 .param("oldEmail", accountCreateDto.getEmail())
                 .param("newEmail", newEmail)
                 .param("password", accountCreateDto.getPassword())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andExpect(status().reason("This account does not exist"));
+    }
+
+
+    @Test
+    public void testDeleteAccount() throws Exception {
+        Account account = TestUtilities.createAccount(1);
+        AccountCreateDto accountCreateDto = new AccountCreateDto();
+        accountCreateDto.setName(account.getName());
+        accountCreateDto.setEmail(account.getEmail());
+        accountCreateDto.setPassword(account.getPassword());
+
+        // Create an account
+        mockMvc.perform(post("/createAccount").content("{\n" +
+                "\"name\": \"" +accountCreateDto.getName()+ "\",\n" +
+                "\"email\": \"" +accountCreateDto.getEmail()+ "\",\n" +
+                "\"password\": \"" +accountCreateDto.getPassword()+ "\"\n" +
+                "}")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+        // Log the account in
+        mockMvc.perform(get("/login")
+                .param("email", account.getEmail())
+                .param("password", account.getPassword())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+        // Delete the account
+        mockMvc.perform(delete("/deleteAccount/" + account.getEmail())
+                .param("password", account.getPassword())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
+
+    @Test
+    public void testDeleteAccountWrongPassword() throws Exception {
+        Account account = TestUtilities.createAccount(1);
+        AccountCreateDto accountCreateDto = new AccountCreateDto();
+        accountCreateDto.setName(account.getName());
+        accountCreateDto.setEmail(account.getEmail());
+        accountCreateDto.setPassword(account.getPassword());
+
+        // Create an account
+        mockMvc.perform(post("/createAccount").content("{\n" +
+                "\"name\": \"" +accountCreateDto.getName()+ "\",\n" +
+                "\"email\": \"" +accountCreateDto.getEmail()+ "\",\n" +
+                "\"password\": \"" +accountCreateDto.getPassword()+ "\"\n" +
+                "}")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+        // Log the account in
+        mockMvc.perform(get("/login")
+                .param("email", account.getEmail())
+                .param("password", account.getPassword())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+        // Delete the account
+        mockMvc.perform(delete("/deleteAccount/" + account.getEmail())
+                .param("password", "wrongPassword")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andExpect(status().reason("Incorrect Password Provided"));
+    }
+
+
+    @Test
+    public void testDeleteAccountWrongEmail() throws Exception {
+        Account account = TestUtilities.createAccount(1);
+        AccountCreateDto accountCreateDto = new AccountCreateDto();
+        accountCreateDto.setName(account.getName());
+        accountCreateDto.setEmail(account.getEmail());
+        accountCreateDto.setPassword(account.getPassword());
+
+        // Create an account
+        mockMvc.perform(post("/createAccount").content("{\n" +
+                "\"name\": \"" +accountCreateDto.getName()+ "\",\n" +
+                "\"email\": \"" +accountCreateDto.getEmail()+ "\",\n" +
+                "\"password\": \"" +accountCreateDto.getPassword()+ "\"\n" +
+                "}")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+        // Log the account in
+        mockMvc.perform(get("/login")
+                .param("email", account.getEmail())
+                .param("password", account.getPassword())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+        // Delete the account
+        mockMvc.perform(delete("/deleteAccount/" + "wrongEmail@mail.ca")
+                .param("password", account.getPassword())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
                 .andExpect(status().reason("This account does not exist"));

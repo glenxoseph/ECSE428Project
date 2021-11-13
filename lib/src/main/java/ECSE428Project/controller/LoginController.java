@@ -25,7 +25,7 @@ public class LoginController {
     // Verifying login
     @GetMapping(value = { "/login", "/login/" })
     public AccountDto verifyCredentials(@RequestParam("email") String email, @RequestParam("password") String password)
-            throws IllegalArgumentException, ResponseStatusException {
+            throws ResponseStatusException {
 
         if (service.profileLogin(email, password).isLoggedIn()) {
             AccountDto profileDTO = convertToDTO(email, true, adminConfigService.isAdmin(email, password));
