@@ -67,6 +67,7 @@
         })
           .then(response => {
             console.log(response.data)
+            localStorage.removeItem("username")
             this.successMessageVisibility = true
             this.successMessage = "Your account has been deleted successfully, you will be redirected to the login page."
             setTimeout(() => this.successMessageVisibility = false + this.$router.push('/'), 4000)
