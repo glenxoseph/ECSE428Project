@@ -171,7 +171,7 @@ public class AccountService {
             account = optAccount.get();
 
             // Set the new rank to the account
-            account.setScore(rank);
+            account.setLevel(rank);
 
         } else {
             // Throw exception if the account doesn't exist
