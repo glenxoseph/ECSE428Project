@@ -133,14 +133,14 @@ public class AccountController {
     public AccountDto assignRankToAccount(@RequestParam("email") String email, @RequestParam("rank") String rankString)
             throws ResponseStatusException {
         try {
-            Double.parseDouble(rankString);
+            Integer.parseInt(rankString);
         } catch (NumberFormatException error) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The rank is not a number.");
         }
 
         return null;
         // These lines will be uncommented when the service method is added
-        //Account account = accountService.assignRankToAccount(email, Double.parseDouble(rankString));
+        //Account account = accountService.assignRankToAccount(email, Integer.parseInt(rankString);
         //return convertToDto(account);
     }
 
