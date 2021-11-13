@@ -76,6 +76,7 @@
               this.newEmail = ''
               this.password = ''
               setTimeout(() => this.successMessageVisibility = false, 4000)
+              localStorage.setItem("username", newEmail)
             })
             .catch(error => {
               console.log(error.response)

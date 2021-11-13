@@ -41,16 +41,18 @@ public class AccountService {
     @Transactional
     public void deleteAccount(String email, String password) {
         if (email == null) {
-            throw new IllegalArgumentException("No account assosciated to this email");
+            throw new IllegalArgumentException("No account associated to this email");
         }else{
             // Delete a new account with the input id
             Optional<Account> opt = accountRepository.findById(email);
-            Account account = opt.get();
+            Account account;
 
-
-            if (account == null) {
-                throw new IllegalArgumentException("Account does not exist");
+            if (opt.isPresent()) {
+                account = opt.get();
+            } else {
+                throw new IllegalArgumentException("This account does not exist");
             }
+
             if (!account.isLoggedIn()) {
                 throw new IllegalArgumentException("Not Logged in");
             }
