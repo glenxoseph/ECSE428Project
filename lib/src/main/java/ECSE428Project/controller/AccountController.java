@@ -118,8 +118,8 @@ public class AccountController {
 
         return null;
         // These lines will be uncommented when the service method is added
-        //Account account = accountService.assignScoreToAccount(email, Double.parseDouble(scoreString));
-        //return convertToDto(account);
+        // Account account = accountService.assignScoreToAccount(email, Double.parseDouble(scoreString));
+        // return convertToDto(account);
     }
 
     /**

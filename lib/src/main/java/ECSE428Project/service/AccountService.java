@@ -69,8 +69,6 @@ public class AccountService {
     }
 
 
-
-
     @Transactional
   public Account changePassword(String email, String oldPass, String newPass) {
     Optional<Account> opt = accountRepository.findById(email);
@@ -141,6 +139,26 @@ public class AccountService {
 		  return true;
 	  }
 	  return false;
+  }
+
+  @Transactional
+  public Account assignScoreToAccount(String email, Double score) {
+      Optional<Account> optAccount = accountRepository.findById(email);
+      Account account;
+
+      // Check that the account exists
+      if (optAccount.isPresent()){
+          account = optAccount.get();
+
+          // Set the new score to the account
+          account.setScore(score.intValue());
+
+      } else {
+          // Throw exception if the account doesn't exist
+          throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This account does not exist");
+      }
+
+      return account;
   }
 
 
