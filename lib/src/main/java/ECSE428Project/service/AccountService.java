@@ -146,7 +146,7 @@ public class AccountService {
       Optional<Account> optAccount = accountRepository.findById(email);
       Account account;
 
-      // Check that the account exists
+      // Check that the account exists in the database
       if (optAccount.isPresent()){
           account = optAccount.get();
 
@@ -166,7 +166,7 @@ public class AccountService {
         Optional<Account> optAccount = accountRepository.findById(email);
         Account account;
 
-        // Check that the account exists
+        // Check that the account exists in the database
         if (optAccount.isPresent()){
             account = optAccount.get();
 
