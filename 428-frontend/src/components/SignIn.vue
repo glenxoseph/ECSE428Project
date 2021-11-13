@@ -71,6 +71,9 @@
       goToCreateAccountPage() {
         this.$router.push('/createAccount')
   }
+    },
+    created() {
+      console.log(localStorage.getItem("username"))
     }
   }
 

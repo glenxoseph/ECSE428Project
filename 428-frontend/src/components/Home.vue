@@ -27,7 +27,7 @@
       <b-button size="sm" variant="danger" id="logout" v-on:click="postLogout">Logout</b-button>
     </div>
 
-  
+
   </div>
 
 </template>
@@ -44,8 +44,10 @@
 
     methods: {
       postLogout() {
+        console.log(localStorage.getItem("username"))
         axios.post('http://localhost:8081/logout' + '?email=' + localStorage.getItem('username'))
         .then(response => {
+          localStorage.removeItem("username")
           if (response.status == 200) {
             this.$router.push('/').catch(()=>{});
           }
@@ -54,6 +56,9 @@
           this.errors.push(e)
         })
       }
+    },
+    created() {
+      console.log(localStorage.getItem("username"))
     }
   }
 

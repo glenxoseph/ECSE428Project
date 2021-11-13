@@ -60,6 +60,7 @@
 
     methods: {
       banAccount(banAccountEmail) {
+        console.log(localStorage.getItem("username"))
         console.log("banning email... " + banAccountEmail);
         const body = {
             email: "admin@mail.com" ,
@@ -105,6 +106,9 @@
           this.unbanAccountEmail = ''
         })
       }
+    },
+    created() {
+      console.log(localStorage.getItem("username"))
     }
   }
 

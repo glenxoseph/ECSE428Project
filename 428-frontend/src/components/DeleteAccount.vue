@@ -83,6 +83,9 @@
           })
       }
       }
+    },
+    created() {
+      console.log(localStorage.getItem("username"))
     }
   }
 
