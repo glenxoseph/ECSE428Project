@@ -75,7 +75,8 @@ public class QuizControllerTest {
 		.andExpect(status().reason("No quiz with name " + "The boring quiz (part 3)"  + " could be found."));
 	}
 	
-	private void createQuizzes() throws Exception {
+	@Test
+	public void createQuizzes() throws Exception {
 		List<Quiz> quizzes = new ArrayList<>();
 		Quiz quiz = new Quiz();
 		quiz.setName("The boring quiz");
@@ -96,16 +97,23 @@ public class QuizControllerTest {
 		question2.addPossibleAnswer("24");
 		question2.addPossibleAnswer("80");
 		question2.setAnswer("12");
+		Question question3 = new Question();
+		question3.setAskedQuestion("How much is just enough?");
+		question3.addPossibleAnswer("12");
+		question3.addPossibleAnswer("24");
+		question3.addPossibleAnswer("80");
+		question3.setAnswer("24");
 		quiz2.addQuestion(question);
 		quiz2.addQuestion(question2);
+		quiz2.addQuestion(question3);
 		quizzes.add(quiz2);
-
-		mockMvc.perform(post("/quiz/create").content(objMapper.writeValueAsString(quizzes))
+		System.out.println(objMapper.writeValueAsString(quizzes));
+		/*mockMvc.perform(post("/quiz/create").content(objMapper.writeValueAsString(quizzes))
 				.contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
 				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
 				.andExpect(content().json("[{\"name\":\"The boring quiz\","
 						+ "\"topic\":\"ALL\"},{\"name\":\"The boring quiz (part 2)\","
-						+ "\"topic\":\"ALL\"}]"));
+						+ "\"topic\":\"ALL\"}]"));*/
 	}
 
 }

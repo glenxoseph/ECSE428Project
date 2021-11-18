@@ -2,9 +2,12 @@ package ECSE428Project.service;
 
 import ECSE428Project.dao.AccountRepository;
 import ECSE428Project.dao.MatchRepository;
+import ECSE428Project.dto.PostGameStatDto;
 import ECSE428Project.model.Account;
 import ECSE428Project.model.GameMode;
 import ECSE428Project.model.Match;
+import ECSE428Project.model.Player;
+import ECSE428Project.model.Question;
 import ECSE428Project.model.Quiz;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -23,8 +26,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class MatchService {
-
-	private static final int DEFAULT_ROUND_NB = 10;
 
 	@Autowired
 	private MatchRepository matchRepository;
@@ -56,7 +57,7 @@ public class MatchService {
 	}
 
 	@Transactional
-	public Match createMatch(List<String> emails, Integer rounds, GameMode mode, String quizName) {
+	public Match createMatch(List<String> emails, GameMode mode, String quizName) {
 		Match match = new Match();
 		for (String email : emails) {
 			Optional<Account> optAccount = accountRepository.findById(email);
@@ -68,13 +69,24 @@ public class MatchService {
 		}
 		match.setGameMode(mode);
 		addQuizToMatch(match, quizName);
+		addPlayersToMatch(match);
 		match = matchRepository.save(match);
 		return match;
+	}
+	
+	private void addPlayersToMatch(Match match) {
+		match.getAccounts().forEach(account -> match.addPlayer(playerFromAccount(account)));
+	}
+	
+	private Player playerFromAccount(Account account) {
+		Player player = new Player();
+		player.setAccountEmail(account.getEmail());
+		return player;
 	}
 
 	@Transactional
 	public Match createMatch(List<String> emails) {
-		return createMatch(emails, DEFAULT_ROUND_NB, GameMode.SOLO, null);
+		return createMatch(emails, GameMode.SOLO, null);
 	}
 
 	@Transactional
@@ -130,4 +142,102 @@ public class MatchService {
 
 		return chosenQuiz;
 	}
+	
+	@Transactional
+	public boolean processAnswer(Player player, String answer, Match match) {
+		int curIndex = player.getGivenAnswers().size();
+		player.addGivenAnswer(answer);
+		if(match.getQuiz().getQuestions().get(curIndex).getAnswer().equals(answer)) {
+			player.setNumberOfCorrectAnswers(player.getNumberOfCorrectAnswers() + 1);
+			match = matchRepository.save(match);
+			return true;
+		}
+		match = matchRepository.save(match);
+		return false;
+	}
+	
+	@Transactional
+	public Question getNextQuestion(String email) {
+		Account account = accountRepository.findById(email).orElse(null);
+		if(account == null) {
+			throw new IllegalArgumentException("No account with the email " + email + " exists");
+		}
+		Hibernate.initialize(account.getMatches());
+		Match currentMatch = account.getMatches().stream()
+				.filter(match -> match.getWinnerId() == null)
+				.findFirst().orElse(null);
+		if(currentMatch == null) {
+			throw new IllegalArgumentException("No live game for the account with the email " + email + " exists");
+		}
+		Player player = currentMatch.getPlayers().stream()
+				.filter(p1 -> email.equals(p1.getAccountEmail()))
+				.findFirst().orElse(null);
+		if(player == null) {
+			throw new IllegalArgumentException("Account with the email " + email + " is not part of the game.");
+		}
+		return getNextQuestion(player, currentMatch);
+	}
+	
+	private Question getNextQuestion(Player player, Match match) {
+		int curIndex = player.getGivenAnswers().size();
+		if(curIndex < match.getQuiz().getQuestions().size()) {
+			return match.getQuiz().getQuestions().get(curIndex);
+		}
+		return null;
+	}
+	
+	@Transactional
+	public Account updateStats(Player player, Match match, PostGameStatDto stat) {
+		int levelGain = (match.getQuiz().getQuestions().size() / 2) + player.getNumberOfCorrectAnswers();
+		int pointsGained = player.getNumberOfCorrectAnswers() * 20;
+		Account account = accountRepository.findById(player.getAccountEmail()).orElse(null);
+		if(account != null) {
+			account.setScore(account.getScore() + pointsGained);
+			account.setLevel(account.getLevel() + levelGain);
+		}
+		if(match.getGameMode().equals(GameMode.SOLO)) {
+			double nbQuestion = match.getQuiz().getQuestions().size();
+			double nbCorrect = player.getNumberOfCorrectAnswers();
+			if((nbCorrect / nbQuestion) >= 0.8) {
+				match.setWinnerId(account.getEmail());
+				match.setWinnerName(account.getName());
+				match = matchRepository.save(match);
+			}
+		}
+		stat.setNumberOfCorrectAnswers(player.getNumberOfCorrectAnswers());
+		stat.setPointsGained(pointsGained);
+		stat.setLevelGained(levelGain);
+		return accountRepository.save(account);
+	}
+	
+	public PostGameStatDto getPostGameStat(Player player, Match match) {
+		PostGameStatDto stat = new PostGameStatDto();
+		updateStats(player, match, stat);
+		return stat;
+	}
+	
+	public PostGameStatDto getPostGameStat(String email) {
+		Account account = accountRepository.findById(email).orElse(null);
+		if(account == null) {
+			throw new IllegalArgumentException("No account with the email " + email + " exists");
+		}
+		Hibernate.initialize(account.getMatches());
+		Match currentMatch = account.getMatches().stream()
+				.filter(match -> match.getWinnerId() == null)
+				.findFirst().orElse(null);
+		if(currentMatch == null) {
+			throw new IllegalArgumentException("No live game for the account with the email " + email + " exists");
+		}
+		Player player = currentMatch.getPlayers().stream()
+				.filter(p1 -> email.equals(p1.getAccountEmail()))
+				.findFirst().orElse(null);
+		if(player == null) {
+			throw new IllegalArgumentException("Account with the email " + email + " is not part of the game.");
+		}
+		return getPostGameStat(player, currentMatch);
+	}
+	
+	
+	
+	
 }

@@ -48,7 +48,8 @@ public class Match {
 			@JoinColumn(name = "account_id") })
     private Set<Account> accounts;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.EAGER)
+    @Cascade(CascadeType.ALL)
     private Set<Player> players;
 
     //------------------------
