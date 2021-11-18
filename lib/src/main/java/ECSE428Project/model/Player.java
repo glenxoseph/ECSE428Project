@@ -34,15 +34,6 @@ public class Player {
     @OneToMany(mappedBy = "player")
     private List<Answer> givenAnswers;
 
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @OneToMany(mappedBy = "player")
-    private List<Question> askedQuestions;
-
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @OneToMany(mappedBy = "player")
-    private List<Match> playerMatches;
-
-
     //------------------------
     // CONSTRUCTOR
     //------------------------
@@ -52,8 +43,7 @@ public class Player {
         numberOfCorrectAnswers = 0;
         numberOfWrongAnswers = 0;
         givenAnswers = new ArrayList<>();
-        askedQuestions = new ArrayList<>();
-        playerMatches = new ArrayList<>();
+        //playerMatches = new ArrayList<>();
     }
 
     public Player(String aId, int aNumberOfCorrectAnswers, int aNumberOfWrongAnswers){
@@ -61,8 +51,7 @@ public class Player {
         numberOfCorrectAnswers = aNumberOfCorrectAnswers;
         numberOfWrongAnswers = aNumberOfWrongAnswers;
         givenAnswers = new ArrayList<>();
-        askedQuestions = new ArrayList<>();
-        playerMatches = new ArrayList<>();
+        //playerMatches = new ArrayList<>();
     }
 
 
@@ -93,17 +82,11 @@ public class Player {
 
     public void setGivenAnswers(List<Answer> answers) { this.givenAnswers = answers; }
 
-    public List<Question> getAskedQuestions() {
-        List<Question> someAskedQuestions = Collections.unmodifiableList(askedQuestions);
-        return someAskedQuestions;
-    }
 
-    public void setAskedQuestions(List<Question> questions) { this.askedQuestions = questions; }
-
-    public List<Match> getPlayerMatches() {
+    /*public List<Match> getPlayerMatches() {
         List<Match> somePlayerMatches = Collections.unmodifiableList(playerMatches);
         return somePlayerMatches;
     }
 
-    public void setPlayerMatches(List<Match> matches) { this.playerMatches = matches; }
+    public void setPlayerMatches(List<Match> matches) { this.playerMatches = matches; }*/
 }

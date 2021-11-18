@@ -1,9 +1,10 @@
 package ECSE428Project.dao;
 
-import ECSE428Project.model.Round;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
+import ECSE428Project.model.Quiz;
 
 @Repository
-public interface RoundRepository extends CrudRepository<Round, String> {
+public interface QuizRepository extends CrudRepository<Quiz, String> {
+	Quiz findByName(String name);
 }

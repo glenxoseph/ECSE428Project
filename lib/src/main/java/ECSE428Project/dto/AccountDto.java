@@ -1,5 +1,7 @@
 package ECSE428Project.dto;
 
+import ECSE428Project.model.Account;
+
 public class AccountDto {
     private String email;
     private String name;
@@ -9,6 +11,16 @@ public class AccountDto {
     private boolean isAdmin;
     private int score;
     private int level;
+    
+    public static AccountDto toDto(Account account) {
+    	AccountDto dto = new AccountDto();
+    	dto.email = account.getEmail();
+    	dto.name = account.getName();
+    	dto.isLoggedIn = account.isLoggedIn();
+    	dto.score = account.getScore();
+    	dto.level = account.getLevel();
+    	return dto;
+    }
 
     public String getName() { return name; }
 
