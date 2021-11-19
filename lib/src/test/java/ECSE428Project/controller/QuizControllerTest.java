@@ -32,49 +32,44 @@ public class QuizControllerTest {
 	private ObjectMapper objMapper;
 
 	@BeforeEach
-	public void setup() throws Exception{
+	public void setup() throws Exception {
 		createQuizzes();
 	}
-	
+
 	@Test
 	public void testCreateQuiz() throws Exception {
 		createQuizzes();
 	}
-	
+
 	@Test
-	public void testGetAllQuizzes() throws Exception{
-		mockMvc.perform(get("/quiz/all").contentType(MediaType.APPLICATION_JSON))
-		.andExpect(status().isOk())
-		.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-		.andExpect(content().json("[{\"name\":\"The boring quiz\","
-				+ "\"topic\":\"ALL\"},{\"name\":\"The boring quiz (part 2)\","
-				+ "\"topic\":\"ALL\"}]"));
+	public void testGetAllQuizzes() throws Exception {
+		mockMvc.perform(get("/quiz/all").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
+				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+				.andExpect(content().json("[{\"name\":\"The boring quiz\","
+						+ "\"topic\":\"ALL\"},{\"name\":\"The boring quiz (part 2)\"," + "\"topic\":\"ALL\"}]"));
 	}
-	
+
 	@Test
-	public void testGetAllQuizzesNames() throws Exception{
-		mockMvc.perform(get("/quiz/all/names").contentType(MediaType.APPLICATION_JSON))
-		.andExpect(status().isOk())
-		.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-		.andExpect(content().json("[\"The boring quiz\", \"The boring quiz (part 2)\"]"));
+	public void testGetAllQuizzesNames() throws Exception {
+		mockMvc.perform(get("/quiz/all/names").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
+				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+				.andExpect(content().json("[\"The boring quiz\", \"The boring quiz (part 2)\"]"));
 	}
-	
+
 	@Test
-	public void testGetQuizByName() throws Exception{
+	public void testGetQuizByName() throws Exception {
 		mockMvc.perform(get("/quiz/The%20boring%20quiz%20(part%202)").contentType(MediaType.APPLICATION_JSON))
-		.andExpect(status().isOk())
-		.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-		.andExpect(content().json("{\"name\":\"The boring quiz (part 2)\","
-				+ "\"topic\":\"ALL\"}"));
+				.andExpect(status().isOk()).andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+				.andExpect(content().json("{\"name\":\"The boring quiz (part 2)\"," + "\"topic\":\"ALL\"}"));
 	}
-	
+
 	@Test
-	public void testGetQuizByNameNonExistent() throws Exception{
+	public void testGetQuizByNameNonExistent() throws Exception {
 		mockMvc.perform(get("/quiz/The%20boring%20quiz%20(part%203)").contentType(MediaType.APPLICATION_JSON))
-		.andExpect(status().isBadRequest())
-		.andExpect(status().reason("No quiz with name " + "The boring quiz (part 3)"  + " could be found."));
+				.andExpect(status().isBadRequest())
+				.andExpect(status().reason("No quiz with name " + "The boring quiz (part 3)" + " could be found."));
 	}
-	
+
 	@Test
 	public void createQuizzes() throws Exception {
 		List<Quiz> quizzes = new ArrayList<>();
@@ -97,23 +92,22 @@ public class QuizControllerTest {
 		question2.addPossibleAnswer("24");
 		question2.addPossibleAnswer("80");
 		question2.setAnswer("12");
-		Question question3 = new Question();
-		question3.setAskedQuestion("How much is just enough?");
-		question3.addPossibleAnswer("12");
-		question3.addPossibleAnswer("24");
-		question3.addPossibleAnswer("80");
-		question3.setAnswer("24");
+		/*
+		 * Question question3 = new Question();
+		 * question3.setAskedQuestion("How much is just enough?");
+		 * question3.addPossibleAnswer("12"); question3.addPossibleAnswer("24");
+		 * question3.addPossibleAnswer("80"); question3.setAnswer("24");
+		 */
 		quiz2.addQuestion(question);
 		quiz2.addQuestion(question2);
-		quiz2.addQuestion(question3);
+		// quiz2.addQuestion(question3);
 		quizzes.add(quiz2);
-		System.out.println(objMapper.writeValueAsString(quizzes));
-		/*mockMvc.perform(post("/quiz/create").content(objMapper.writeValueAsString(quizzes))
+		// System.out.println(objMapper.writeValueAsString(quizzes));
+		mockMvc.perform(post("/quiz/create").content(objMapper.writeValueAsString(quizzes))
 				.contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
 				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
 				.andExpect(content().json("[{\"name\":\"The boring quiz\","
-						+ "\"topic\":\"ALL\"},{\"name\":\"The boring quiz (part 2)\","
-						+ "\"topic\":\"ALL\"}]"));*/
+						+ "\"topic\":\"ALL\"},{\"name\":\"The boring quiz (part 2)\"," + "\"topic\":\"ALL\"}]"));
 	}
 
 }

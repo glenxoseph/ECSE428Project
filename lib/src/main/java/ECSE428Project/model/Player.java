@@ -1,5 +1,7 @@
 package ECSE428Project.model;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -34,6 +36,7 @@ public class Player {
     //------------------------
 
     @ElementCollection(fetch = FetchType.EAGER)
+    @Fetch (FetchMode.SELECT)
     private List<String> givenAnswers;
 
     //------------------------

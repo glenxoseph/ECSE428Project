@@ -11,6 +11,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
@@ -27,6 +30,7 @@ public class Quiz {
 	private QuestionTopic topic;
 	
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@Fetch (FetchMode.SELECT)
 	private List<Question> questions;
 	
 	public Quiz() {
@@ -56,6 +60,10 @@ public class Quiz {
 	
 	public List<Question> getQuestions(){
 		return Collections.unmodifiableList(questions);
+	}
+	
+	public void setQuestions(List<Question> questions) {
+		this.questions = questions;
 	}
 	
 	public boolean removeQuestion(Question question){

@@ -2,6 +2,7 @@ package ECSE428Project.service;
 
 import ECSE428Project.dao.AccountRepository;
 import ECSE428Project.dao.MatchRepository;
+import ECSE428Project.dao.PlayerRepository;
 import ECSE428Project.dto.PostGameStatDto;
 import ECSE428Project.model.Account;
 import ECSE428Project.model.GameMode;
@@ -10,6 +11,7 @@ import ECSE428Project.model.Player;
 import ECSE428Project.model.Question;
 import ECSE428Project.model.Quiz;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -32,6 +34,9 @@ public class MatchService {
 
 	@Autowired
 	private AccountRepository accountRepository;
+	
+	@Autowired
+	private PlayerRepository playerRepository;
 
 	@Autowired
 	private QuizService quizService;
@@ -144,38 +149,14 @@ public class MatchService {
 	}
 	
 	@Transactional
-	public boolean processAnswer(Player player, String answer, Match match) {
+	private String processAnswer(Player player, String answer, Match match) {
 		int curIndex = player.getGivenAnswers().size();
 		player.addGivenAnswer(answer);
 		if(match.getQuiz().getQuestions().get(curIndex).getAnswer().equals(answer)) {
 			player.setNumberOfCorrectAnswers(player.getNumberOfCorrectAnswers() + 1);
-			match = matchRepository.save(match);
-			return true;
 		}
 		match = matchRepository.save(match);
-		return false;
-	}
-	
-	@Transactional
-	public Question getNextQuestion(String email) {
-		Account account = accountRepository.findById(email).orElse(null);
-		if(account == null) {
-			throw new IllegalArgumentException("No account with the email " + email + " exists");
-		}
-		Hibernate.initialize(account.getMatches());
-		Match currentMatch = account.getMatches().stream()
-				.filter(match -> match.getWinnerId() == null)
-				.findFirst().orElse(null);
-		if(currentMatch == null) {
-			throw new IllegalArgumentException("No live game for the account with the email " + email + " exists");
-		}
-		Player player = currentMatch.getPlayers().stream()
-				.filter(p1 -> email.equals(p1.getAccountEmail()))
-				.findFirst().orElse(null);
-		if(player == null) {
-			throw new IllegalArgumentException("Account with the email " + email + " is not part of the game.");
-		}
-		return getNextQuestion(player, currentMatch);
+		return match.getQuiz().getQuestions().get(curIndex).getAnswer();
 	}
 	
 	private Question getNextQuestion(Player player, Match match) {
@@ -216,28 +197,37 @@ public class MatchService {
 		return stat;
 	}
 	
-	public PostGameStatDto getPostGameStat(String email) {
-		Account account = accountRepository.findById(email).orElse(null);
-		if(account == null) {
-			throw new IllegalArgumentException("No account with the email " + email + " exists");
-		}
-		Hibernate.initialize(account.getMatches());
-		Match currentMatch = account.getMatches().stream()
-				.filter(match -> match.getWinnerId() == null)
-				.findFirst().orElse(null);
-		if(currentMatch == null) {
-			throw new IllegalArgumentException("No live game for the account with the email " + email + " exists");
-		}
-		Player player = currentMatch.getPlayers().stream()
-				.filter(p1 -> email.equals(p1.getAccountEmail()))
-				.findFirst().orElse(null);
-		if(player == null) {
-			throw new IllegalArgumentException("Account with the email " + email + " is not part of the game.");
-		}
-		return getPostGameStat(player, currentMatch);
+	public PostGameStatDto getPostGameStat(String email, String matchId) {
+		HashMap<String, Object> map = getPlayerAndMatch(email, matchId);	
+		return getPostGameStat((Player)map.get("player"), (Match)map.get("match"));
 	}
 	
+	@Transactional
+	public Question getNextQuestion(String email, String matchId) {
+		HashMap<String, Object> map = getPlayerAndMatch(email, matchId);	
+		return getNextQuestion((Player)map.get("player"), (Match)map.get("match"));
+	}
 	
+	@Transactional
+	public String getAnswer(String email, String answer, String matchId) throws IllegalArgumentException{
+		HashMap<String, Object> map = getPlayerAndMatch(email, matchId);	
+		return processAnswer((Player)map.get("player"), answer, (Match)map.get("match"));
+	}
 	
-	
+	@Transactional
+	private HashMap<String, Object> getPlayerAndMatch(String email, String matchId){
+		HashMap<String, Object> map = new HashMap<>();
+		Player player = playerRepository.findByAccountEmail(email);
+		if(player == null) {
+			throw new IllegalArgumentException("No player with associated email " + email + " could be found");
+		}
+		Match currentMatch = matchRepository.findById(matchId).orElse(null);
+		if(currentMatch == null) {
+			throw new IllegalArgumentException("No match with id " + matchId + " could be found");
+		}
+		map.put("player", player);
+		map.put("match", currentMatch);
+		return map;
+	}
+		
 }

@@ -3,6 +3,8 @@ package ECSE428Project.model;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -44,12 +46,14 @@ public class Match {
 
     @Cascade(CascadeType.ALL)
 	@ManyToMany(fetch = FetchType.EAGER)
+    @Fetch (FetchMode.SELECT)
 	@JoinTable(name = "match_account", joinColumns = { @JoinColumn(name = "match_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "account_id") })
     private Set<Account> accounts;
 
     @OneToMany(fetch = FetchType.EAGER)
     @Cascade(CascadeType.ALL)
+    @Fetch (FetchMode.SELECT)
     private Set<Player> players;
 
     //------------------------

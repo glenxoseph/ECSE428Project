@@ -89,7 +89,7 @@ public class Question {
 	public boolean equals(Object o) {
 		if(o instanceof Question && this.id != null) {
 			Question q = (Question)o;
-			return this.id != null && this.id.equals(q.id);
+			return this.id.equals(q.id);
 		}
 		return false;
 	}
