@@ -6,6 +6,7 @@ public class AccountDto {
     private String password;
     private boolean isVerified;
     private boolean isLoggedIn;
+    private boolean isAdmin;
     private int score;
     private int level;
 
@@ -18,6 +19,8 @@ public class AccountDto {
     public boolean isVerified() { return isVerified; }
 
     public boolean isLoggedIn() { return isLoggedIn; }
+    
+    public boolean isAdmin() {return isAdmin;}
 
     public int getScore() { return score; }
 
@@ -32,6 +35,8 @@ public class AccountDto {
     public void setVerified(boolean verified) { isVerified = verified; }
 
     public void setLoggedIn(boolean loggedIn) { isLoggedIn = loggedIn; }
+    
+    public void setIsAdmin(boolean isAdmin) {this.isAdmin = isAdmin;}
 
     public void setScore(int score) { this.score = score; }
 

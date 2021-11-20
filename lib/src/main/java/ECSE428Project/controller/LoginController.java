@@ -2,6 +2,7 @@ package ECSE428Project.controller;
 
 
 import ECSE428Project.dto.AccountDto;
+import ECSE428Project.service.AdminConfigService;
 import ECSE428Project.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -15,13 +16,15 @@ public class LoginController {
 
     @Autowired
     private LoginService service;
+    @Autowired
+    private AdminConfigService adminConfigService;
 
     // Verifying login
     @GetMapping(value = { "/login", "/login/" })
     public AccountDto verifyCredentials(@RequestParam("email") String email, @RequestParam("password") String password)
             throws IllegalArgumentException {
         if (service.profileLogin(email, password).isLoggedIn()) {
-            AccountDto profileDTO = convertToDTO(email, true);
+            AccountDto profileDTO = convertToDTO(email, true, adminConfigService.isAdmin(email, password));
             return profileDTO;
         } else {
             throw new IllegalArgumentException("Login Failed"); // Won't really happen
@@ -30,10 +33,11 @@ public class LoginController {
 
 
     // For logging in
-    private AccountDto convertToDTO(String email, boolean isLoggedIn) {
+    private AccountDto convertToDTO(String email, boolean isLoggedIn, boolean isAdmin) {
         AccountDto profileDTO = new AccountDto();
         profileDTO.setEmail(email);
         profileDTO.setLoggedIn(isLoggedIn);
+        profileDTO.setIsAdmin(isAdmin);
         return profileDTO;
     }
 }
