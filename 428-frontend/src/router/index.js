@@ -1,5 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import Hello from '@/components/Hello'
+import Game from '@/components/Game'
+import SignUp from '@/components/SignUp'
+import MatchHistory from '@/components/MatchHistory'
 import SignIn from '@/components/SignIn'
 import Home from '@/components/Home'
 import Settings from '@/components/Settings'
@@ -50,6 +54,20 @@ export default new Router({
       component: BannedAccounts
     },
     {
+      path: '/game',
+      name: 'Game',
+      component: Game
+    },
+    {
+      path: '/signup',
+      name: 'SignUp',
+      component: SignUp
+    }
+    ,
+    {
+      path: '/matchhistory',
+      name: 'MatchHistory',
+      component: MatchHistory,
       path: '/app',
       name: 'ECSE428',
       component: ECSE428
