@@ -142,7 +142,7 @@ public class AccountService {
   }
 
   @Transactional
-  public Account assignScoreToAccount(String email, Double score) {
+  public Account assignScoreToAccount(String email, int score) {
       Optional<Account> optAccount = accountRepository.findById(email);
       Account account;
 
@@ -151,7 +151,8 @@ public class AccountService {
           account = optAccount.get();
 
           // Set the new score to the account
-          account.setScore(score.intValue());
+          account.setScore(score);
+          account = accountRepository.save(account);
 
       } else {
           // Throw exception if the account doesn't exist
@@ -162,7 +163,7 @@ public class AccountService {
   }
 
     @Transactional
-    public Account assignRankToAccount(String email, Integer rank) {
+    public Account assignRankToAccount(String email, int rank) {
         Optional<Account> optAccount = accountRepository.findById(email);
         Account account;
 
@@ -172,6 +173,7 @@ public class AccountService {
 
             // Set the new rank to the account
             account.setLevel(rank);
+            account = accountRepository.save(account);
 
         } else {
             // Throw exception if the account doesn't exist

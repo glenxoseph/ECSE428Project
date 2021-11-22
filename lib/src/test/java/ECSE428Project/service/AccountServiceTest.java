@@ -287,8 +287,51 @@ public class AccountServiceTest {
 
         // Verify that an exception is thrown when the wrong password is provided
         assertThrows(ResponseStatusException.class, () ->
-                        accountService.deleteAccount("wrongEmail", password),
-                "j");
+                        accountService.deleteAccount("wrongEmail", password));
     }
 
+
+    @Test
+    public void assignScoreToAccount() {
+        String name = "accountName1", email = "email@hotmail.com", password = "password1";
+        Account account = new Account();
+        account.setName(name);
+        account.setEmail(email);
+        account.setPassword(password);
+        account.setLoggedIn(true);
+
+        int score = 1;
+
+        // Mock repository call to mock there already being a value in the database with this email
+        when(accountRepository.findById(email)).thenReturn(Optional.of(account));
+
+        // Verify that the default score assigned to the account is 0
+        assertEquals(account.getScore(), 0);
+
+        // Assign the created "score" integer to the account
+        accountService.assignScoreToAccount(account.getEmail(), score);
+
+        // Verify that the score has been assigned correctly and that the account has been saved in the database
+        assertEquals(account.getScore(), score);
+        verify(accountRepository).save(any(Account.class));
+    }
+
+    @Test
+    public void assignScoreToWrongAccount() {
+        String name = "accountName1", email = "email@hotmail.com", password = "password1";
+        Account account = new Account();
+        account.setName(name);
+        account.setEmail(email);
+        account.setPassword(password);
+        account.setLoggedIn(true);
+
+        int score = 1;
+
+        // Mock repository call to mock there already being a value in the database with this email
+        when(accountRepository.findById(email)).thenReturn(Optional.of(account));
+
+        // Verify that an error is thrown when the email does not exist in the database
+        assertThrows(ResponseStatusException.class, () ->
+                accountService.assignScoreToAccount("wrongEmail", score));
+    }
 }
