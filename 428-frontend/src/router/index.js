@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Hello from '@/components/Hello'
 import Game from '@/components/Game'
 import SignUp from '@/components/SignUp'
 import MatchHistory from '@/components/MatchHistory'
@@ -11,7 +10,6 @@ import ChangePassword from '@/components/ChangePassword'
 import ChangeEmail from '@/components/ChangeEmail'
 import DeleteAccount from '@/components/DeleteAccount'
 import BannedAccounts from '@/components/BannedAccounts'
-import ECSE428 from '@/components/ECSE428'
 import CreateAccount from "../components/CreateAccount";
 
 Vue.use(Router)
@@ -68,9 +66,6 @@ export default new Router({
       path: '/matchhistory',
       name: 'MatchHistory',
       component: MatchHistory,
-      path: '/app',
-      name: 'ECSE428',
-      component: ECSE428
     },
     {
       path: '/createAccount',
