@@ -38,6 +38,18 @@ public class AccountService {
         return account;
     }
 
+
+    @Transactional
+    public Account getAccount(String email) {
+        Optional<Account> optionalAccount = accountRepository.findById(email);
+
+        if (!optionalAccount.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "There is no account associated to this email");
+        } else {
+            return optionalAccount.get();
+        }
+    }
+
     @Transactional
     public void deleteAccount(String email, String password) {
         if (email == null) {
