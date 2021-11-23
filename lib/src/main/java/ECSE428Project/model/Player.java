@@ -1,11 +1,13 @@
 package ECSE428Project.model;
 
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.GenericGenerator;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,28 +22,22 @@ public class Player {
     //------------------------
 
     @Id
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
+    
+    private String accountEmail;
 
     private int numberOfCorrectAnswers;
-    private int numberOfWrongAnswers;
 
 
     //------------------------
     // ASSOCIATIONS
     //------------------------
 
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @OneToMany(mappedBy = "player")
-    private List<Answer> givenAnswers;
-
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @OneToMany(mappedBy = "player")
-    private List<Question> askedQuestions;
-
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @OneToMany(mappedBy = "player")
-    private List<Match> playerMatches;
-
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Fetch (FetchMode.SELECT)
+    private List<String> givenAnswers;
 
     //------------------------
     // CONSTRUCTOR
@@ -50,19 +46,15 @@ public class Player {
     public Player() {
         id = null;
         numberOfCorrectAnswers = 0;
-        numberOfWrongAnswers = 0;
         givenAnswers = new ArrayList<>();
-        askedQuestions = new ArrayList<>();
-        playerMatches = new ArrayList<>();
+        //playerMatches = new ArrayList<>();
     }
 
-    public Player(String aId, int aNumberOfCorrectAnswers, int aNumberOfWrongAnswers){
+    public Player(String aId, int aNumberOfCorrectAnswers){
         id = aId;
         numberOfCorrectAnswers = aNumberOfCorrectAnswers;
-        numberOfWrongAnswers = aNumberOfWrongAnswers;
         givenAnswers = new ArrayList<>();
-        askedQuestions = new ArrayList<>();
-        playerMatches = new ArrayList<>();
+        //playerMatches = new ArrayList<>();
     }
 
 
@@ -77,33 +69,34 @@ public class Player {
 
     public void setNumberOfCorrectAnswers(int aNumber) { numberOfCorrectAnswers = aNumber; }
 
-    public void setNumberOfWrongAnswers(int aNumber) { numberOfWrongAnswers = aNumber; }
-
     public String getId() { return id; }
 
     public int getNumberOfCorrectAnswers() { return numberOfCorrectAnswers; }
 
-    public int getNumberOfWrongAnswers() { return numberOfWrongAnswers; }
-
-
-    public List<Answer> getGivenAnswers() {
-        List<Answer> someGivenAnswers = Collections.unmodifiableList(givenAnswers);
+    public List<String> getGivenAnswers() {
+        List<String> someGivenAnswers = Collections.unmodifiableList(givenAnswers);
         return someGivenAnswers;
     }
 
-    public void setGivenAnswers(List<Answer> answers) { this.givenAnswers = answers; }
-
-    public List<Question> getAskedQuestions() {
-        List<Question> someAskedQuestions = Collections.unmodifiableList(askedQuestions);
-        return someAskedQuestions;
+    public void setGivenAnswers(List<String> answers) { this.givenAnswers = answers; }
+    
+    public void addGivenAnswer(String answer) {
+    	givenAnswers.add(answer);
     }
 
-    public void setAskedQuestions(List<Question> questions) { this.askedQuestions = questions; }
+	public String getAccountEmail() {
+		return accountEmail;
+	}
 
-    public List<Match> getPlayerMatches() {
+	public void setAccountEmail(String accountEmail) {
+		this.accountEmail = accountEmail;
+	}
+
+
+    /*public List<Match> getPlayerMatches() {
         List<Match> somePlayerMatches = Collections.unmodifiableList(playerMatches);
         return somePlayerMatches;
     }
 
-    public void setPlayerMatches(List<Match> matches) { this.playerMatches = matches; }
+    public void setPlayerMatches(List<Match> matches) { this.playerMatches = matches; }*/
 }

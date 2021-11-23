@@ -9,13 +9,11 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.invocation.InvocationOnMock;
@@ -24,11 +22,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-
 import ECSE428Project.dao.AccountRepository;
 import ECSE428Project.dao.MatchRepository;
+import ECSE428Project.dao.QuizRepository;
 import ECSE428Project.model.Account;
 import ECSE428Project.model.Match;
+import ECSE428Project.model.Quiz;
 import ECSE428Project.model.TestUtilities;
 
 @ExtendWith(SpringExtension.class)
@@ -43,6 +42,9 @@ public class MatchServiceTest {
 	
 	@MockBean
 	private MatchRepository matchRepository;
+	
+	@MockBean
+	private QuizRepository quizRepository;
 	
 	@Test
 	public void getAccountMatch() {
@@ -87,6 +89,7 @@ public class MatchServiceTest {
         when(accountRepository.findById(account1.getEmail())).thenReturn(Optional.of(account1));
         when(accountRepository.findById(account2.getEmail())).thenReturn(Optional.of(account2));
         when(accountRepository.findById(account3.getEmail())).thenReturn(Optional.of(account3));
+        prepareQuiz();
         List<String> emails = new ArrayList<>();
         emails.add(account1.getEmail());
         emails.add(account2.getEmail());
@@ -119,6 +122,7 @@ public class MatchServiceTest {
         emails.add(account1.getEmail());
         emails.add(account2.getEmail());
         emails.add(account3.getEmail());
+        prepareQuiz();
         
         assertThrows(IllegalArgumentException.class, () -> matchService.createMatch(emails), "No account with email " + account3.getEmail());
         verify(matchRepository, never()).save(any(Match.class));
@@ -128,5 +132,12 @@ public class MatchServiceTest {
 		Match match = new Match();
 		match.setMatchId("" + id);
 		return match;
+	}
+	
+	private void prepareQuiz() {
+		List<Quiz> quizzes = new ArrayList<>();
+        Quiz quiz = new Quiz();
+        quizzes.add(quiz);
+        when(quizRepository.findAll()).thenReturn(quizzes);
 	}
 }

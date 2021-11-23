@@ -1,11 +1,11 @@
 package ECSE428Project.model;
 
-
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import org.hibernate.annotations.GenericGenerator;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,22 +17,16 @@ public class Question {
     // ATTRIBUTES
     //------------------------
 
-    @Id
+	@Id
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
-
     private String askedQuestion;
-    private String hint;
 
     @ElementCollection
-    private List<String> acceptedAnswers;
-
-
-    //------------------------
-    // ASSOCIATIONS
-    //------------------------
-
-    @ManyToOne(optional = false)
-    private Player player;
+    private List<String> possibleAnswers;
+    
+    private String answer;
 
 
     //------------------------
@@ -40,19 +34,14 @@ public class Question {
     //------------------------
 
     public Question() {
-        id = null;
         askedQuestion = null;
-        acceptedAnswers = new ArrayList<>();
-        hint = null;
-        player = null;
+        possibleAnswers = new ArrayList<>();
     }
 
-    public Question(String aId, String anAskedQuestion, String aHint, List<String> someAcceptedAnswers, Player aPlayer) {
-        id = aId;
+    public Question(String anAskedQuestion, List<String> possibleAnswers, String answer) {
         askedQuestion = anAskedQuestion;
-        hint = aHint;
-        acceptedAnswers = someAcceptedAnswers;
-        setPlayer(aPlayer);
+        this.possibleAnswers = possibleAnswers;
+        this.answer = answer;
     }
 
 
@@ -65,19 +54,43 @@ public class Question {
 
     public void setAskedQuestion(String askedQuestion) { this.askedQuestion = askedQuestion; }
 
-    public void setHint(String hint) { this.hint = hint; }
-
-    public void setAcceptedAnswers(List<String> acceptedAnswers) { this.acceptedAnswers = acceptedAnswers; }
-
-    public void setPlayer(Player player) { this.player = player; }
+    public void setPossibleAnswers(List<String> acceptedAnswers) { this.possibleAnswers = acceptedAnswers; }
 
     public String getId() { return id; }
 
     public String getAskedQuestion() { return askedQuestion; }
 
-    public String getHint() { return hint; }
+    public List<String> getPossibleAnswers() { return possibleAnswers; }
 
-    public List<String> getAcceptedAnswers() { return acceptedAnswers; }
+    public boolean removePossibleAnswer(String answer) {
+    	return possibleAnswers.remove(answer);
+    }
+    
+    public String removePossibleAnswer(int index) {
+    	if(possibleAnswers.size() < index && index >= 0) {
+    		return possibleAnswers.remove(index);
+    	}
+    	return null;
+    }
+    
+    public boolean addPossibleAnswer(String answer) {
+    	return possibleAnswers.add(answer);
+    }
+    
+	public String getAnswer() {
+		return answer;
+	}
 
-    public Player getPlayer() { return player; }
+	public void setAnswer(String answer) {
+		this.answer = answer;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if(o instanceof Question && this.id != null) {
+			Question q = (Question)o;
+			return this.id.equals(q.id);
+		}
+		return false;
+	}
 }

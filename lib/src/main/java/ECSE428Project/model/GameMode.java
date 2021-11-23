@@ -1,3 +1,3 @@
 package ECSE428Project.model;
 
-public enum GameMode { Solo, Online }
+public enum GameMode { SOLO, ONLINE}
