@@ -349,4 +349,90 @@ public class AccountControllerTest {
                 .andExpect(status().isBadRequest())
                 .andExpect(status().reason("This account does not exist"));
     }
+
+    @Test
+    public void testAssignScoreToAccount() throws Exception {
+        Account account = TestUtilities.createAccount(1);
+        AccountCreateDto accountCreateDto = new AccountCreateDto();
+        accountCreateDto.setName(account.getName());
+        accountCreateDto.setEmail(account.getEmail());
+        accountCreateDto.setPassword(account.getPassword());
+
+        String score = "1";
+
+        // Create an account and post it to the database
+        mockMvc.perform(post("/createAccount").content("{\n" +
+                "\"name\": \"" + accountCreateDto.getName() + "\",\n" +
+                "\"email\": \"" + accountCreateDto.getEmail() + "\",\n" +
+                "\"password\": \"" + accountCreateDto.getPassword() + "\"\n" +
+                "}")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+        // Assign the "score" String to the account and verify that the output is as expected
+        mockMvc.perform(put("/account/email/score")
+                .param("email", accountCreateDto.getEmail())
+                .param("score", score)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().json("{\"email\":\"accountEmail1@a.ca\",\"name\":\"accountName1\",\"password\":\"password1\",\"score\":1,\"level\":0,\"admin\":false,\"verified\":false,\"loggedIn\":false}"));
+    }
+
+
+    @Test
+    public void testAssignScoreToAccountInvalidNumber() throws Exception {
+        Account account = TestUtilities.createAccount(1);
+        AccountCreateDto accountCreateDto = new AccountCreateDto();
+        accountCreateDto.setName(account.getName());
+        accountCreateDto.setEmail(account.getEmail());
+        accountCreateDto.setPassword(account.getPassword());
+
+        String score = "notANumber";
+
+        // Create an account and post it to the database
+        mockMvc.perform(post("/createAccount").content("{\n" +
+                "\"name\": \"" + accountCreateDto.getName() + "\",\n" +
+                "\"email\": \"" + accountCreateDto.getEmail() + "\",\n" +
+                "\"password\": \"" + accountCreateDto.getPassword() + "\"\n" +
+                "}")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+        // Assign the invalid "score" String to the account and verify that an exception is thrown
+        mockMvc.perform(put("/account/email/score")
+                .param("email", accountCreateDto.getEmail())
+                .param("score", score)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andExpect(status().reason("The score is not a number."));
+    }
+
+    @Test
+    public void testAssignScoreToAccountWrongEmail() throws Exception {
+        Account account = TestUtilities.createAccount(1);
+        AccountCreateDto accountCreateDto = new AccountCreateDto();
+        accountCreateDto.setName(account.getName());
+        accountCreateDto.setEmail(account.getEmail());
+        accountCreateDto.setPassword(account.getPassword());
+
+        String score = "1";
+        String wrongEmail = "wrongEmail";
+
+        // Create an account and post it to the database
+        mockMvc.perform(post("/createAccount").content("{\n" +
+                "\"name\": \"" + accountCreateDto.getName() + "\",\n" +
+                "\"email\": \"" + accountCreateDto.getEmail() + "\",\n" +
+                "\"password\": \"" + accountCreateDto.getPassword() + "\"\n" +
+                "}")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+        // Assign the invalid "score" String to the account and verify that an exception is thrown
+        mockMvc.perform(put("/account/email/score")
+                .param("email", wrongEmail)
+                .param("score", score)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andExpect(status().reason("This account does not exist"));
+    }
 }

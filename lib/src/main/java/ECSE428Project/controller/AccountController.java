@@ -111,15 +111,13 @@ public class AccountController {
             throws ResponseStatusException {
 
         try {
-            Double.parseDouble(scoreString);
+            Integer.parseInt(scoreString);
         } catch (NumberFormatException error) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The score is not a number.");
         }
 
-        return null;
-        // These lines will be uncommented when the service method is added
-        //Account account = accountService.assignScoreToAccount(email, Double.parseDouble(scoreString));
-        //return convertToDto(account);
+        Account account = accountService.assignScoreToAccount(email, Integer.parseInt(scoreString));
+        return convertToDto(account);
     }
 
     /**
