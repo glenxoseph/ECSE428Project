@@ -6,7 +6,7 @@
     <h4 class="m-5"> Please Select a Game Mode </h4>
 
     <div class="m-5">
-        <b-button type="submit" size="lg" variant="primary">Solo Mode</b-button>
+        <b-button type="submit" size="lg" variant="primary" @click="goToQuizSelectionPage">Solo Mode</b-button>
     </div>
     <div class="m-5">
         <b-button type="submit" size="lg" variant="primary">Multiplayer Mode</b-button>
@@ -55,6 +55,9 @@
         .catch(e => {
           this.errors.push(e)
         })
+      },
+      goToQuizSelectionPage() {
+        this.$router.push('/quizSelection')
       }
     },
     created() {
