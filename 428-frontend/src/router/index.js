@@ -9,6 +9,7 @@ import DeleteAccount from '@/components/DeleteAccount'
 import BannedAccounts from '@/components/BannedAccounts'
 import ECSE428 from '@/components/ECSE428'
 import CreateAccount from "../components/CreateAccount";
+import QuizSelection from "../components/QuizSelection";
 
 Vue.use(Router)
 
@@ -58,6 +59,11 @@ export default new Router({
       path: '/createAccount',
       name: 'CreateAccount',
       component: CreateAccount
+    },
+    {
+      path: '/quizSelection',
+      name: 'QuizSelection',
+      component: QuizSelection
     }
   ]
 })
