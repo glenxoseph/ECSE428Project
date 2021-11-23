@@ -1,5 +1,8 @@
 <template>
   <div>
+    <router-link to="/home"><b-button class="p3" type="submit" size="sm" variant="dark">Back to Home</b-button></router-link>
+
+    <hr style="width: 50%">
 
     <h1 id="title"> Quiz Selection </h1>
 
