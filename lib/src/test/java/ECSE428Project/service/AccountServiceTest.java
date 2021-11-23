@@ -203,6 +203,29 @@ public class AccountServiceTest {
         verify(accountRepository).save(any(Account.class));
     }
 
+     @Test
+    public void testAssignRank() {
+        String email = "newEmail@mail.com", password = "password", name = "name";
+        Account account = new Account();
+        account.setName(name);
+        account.setEmail(email);
+        account.setPassword(password);
+
+        Integer rank = 100;
+
+        // mock repository call to mock there already being a value in the database with
+        // this email
+        when(accountRepository.findById(email)).thenReturn(Optional.of(account));
+
+        // Call the service method to change the account's email
+        account = accountService.assignRankToAccount(email,rank);
+
+        // Verify that the method returns the expected results
+        assertEquals(email, account.getEmail());
+        assertEquals(rank, account.getLevel());
+        verify(accountRepository, never()).save(any(Account.class));
+    }
+
 
     @Test
     public void testChangeAccountIncorrectPassword() {
