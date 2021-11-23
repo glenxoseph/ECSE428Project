@@ -15,7 +15,7 @@
     <hr style="width: 50%">
 
     <div class="m-5">
-        <b-button class="p3" type="submit" size="lg" variant="dark">My Statistics</b-button>
+        <b-button class="p3" type="submit" size="lg" variant="dark" @click="goToMatchHistoryPage">My Statistics</b-button>
     </div>
 
      <hr style="width: 50%">
@@ -58,6 +58,9 @@
       },
       goToQuizSelectionPage() {
         this.$router.push('/quizSelection')
+      },
+      goToMatchHistoryPage() {
+        this.$router.push('/matchHistory')
       }
     },
     created() {

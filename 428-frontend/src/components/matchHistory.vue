@@ -1,9 +1,11 @@
 <template>
 
   <div>
-    <h1> Welcome to GameName </h1>
+    <router-link to="/home"><b-button class="p3" type="submit" size="sm" variant="dark">Back to Home</b-button></router-link>
 
-    <h4 class="m-5"> View Match History </h4>
+    <hr style="width: 50%">
+
+    <h1> View Match History </h1>
 
     <form class="m-5">
       <table id='histroy_table'>
@@ -34,10 +36,6 @@
         </tr>
       </table>
     </form>
-
-    <div class="d-flex justify-content-center">
-      <b-button size="sm" variant="dark" id="return">Return</b-button>
-    </div>
 
   </div>
 

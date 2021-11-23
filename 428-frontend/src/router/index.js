@@ -64,7 +64,7 @@ export default new Router({
     }
     ,
     {
-      path: '/matchhistory',
+      path: '/matchHistory',
       name: 'MatchHistory',
       component: MatchHistory,
     },
