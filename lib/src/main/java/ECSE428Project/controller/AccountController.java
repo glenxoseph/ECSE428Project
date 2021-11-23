@@ -43,6 +43,18 @@ public class AccountController {
     }
 
 
+    @GetMapping(path = "/account/{email}")
+    public AccountDto getAccount(@PathVariable (name = "email") String email) throws ResponseStatusException {
+
+        // Verify that the input email is not null
+        if(email == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email cannot be null");
+        }
+
+        // Call the getAccount service method and return the account it gets as a DTO
+        return convertToDto(accountService.getAccount(email));
+    }
+
     /**
      * Deletes an account
      */

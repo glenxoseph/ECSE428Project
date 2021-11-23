@@ -98,7 +98,38 @@ public class AccountServiceTest {
         // Verify that accountRepository.save() was never called
         verify(accountRepository, never()).save(any(Account.class));
     }
-    
+
+
+    @Test
+    public void getAccount() {
+        // Create an account and variables
+        Account testAccount = TestUtilities.createAccount(1);
+
+        // mock repository call to mock there already being a value in the database with this email
+        when(accountRepository.findById(testAccount.getEmail())).thenReturn(Optional.of(testAccount));
+
+        // Get the account
+        Account account = accountService.getAccount(testAccount.getEmail());
+
+        // Verify that the returned account has the same attributes as the original account
+        assertEquals(account.getEmail(), testAccount.getEmail());
+        assertEquals(account.getName(), testAccount.getName());
+        assertEquals(account.getPassword(), testAccount.getPassword());
+    }
+
+
+    @Test
+    public void getNullAccount() {
+        // Create an account and variables
+        Account testAccount = TestUtilities.createAccount(1);
+
+        // mock repository call to mock there already being a value in the database with this email
+        when(accountRepository.findById(testAccount.getEmail())).thenReturn(Optional.empty());
+
+        // Verify that an error is thrown when the method is called
+        assertThrows(ResponseStatusException.class, () -> accountService.getAccount(testAccount.getEmail()));
+    }
+
   @Test
   public void testChangePassword() {
     String name = "accountName1", email = "max@hotmail.com", oldPassword = "password1", newPassword = "password2";
