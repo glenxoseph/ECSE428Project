@@ -92,6 +92,43 @@ public class AccountControllerTest {
                 .andExpect(status().isBadRequest())
                 .andExpect(status().reason("This is not a valid email address"));
     }
+
+
+    @Test
+    public void testGetAccount() throws Exception {
+        Account account = TestUtilities.createAccount(1);
+        AccountCreateDto accountCreateDto = new AccountCreateDto();
+        accountCreateDto.setName(account.getName());
+        accountCreateDto.setEmail(account.getEmail());
+        accountCreateDto.setPassword(account.getPassword());
+
+        // Create and save an account to the database
+        mockMvc.perform(post("/createAccount").content("{\n" +
+                "\"name\": \"" + accountCreateDto.getName() + "\",\n" +
+                "\"email\": \"" + accountCreateDto.getEmail() + "\",\n" +
+                "\"password\": \"" + accountCreateDto.getPassword() + "\"\n" +
+                "}")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+        // Get the account and verify that the output is as expected
+        mockMvc.perform(get("/account/" + accountCreateDto.getEmail())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(content().json("{\"email\":\"accountEmail1@a.ca\",\"name\":\"accountName1\",\"password\":\"password1\",\"score\":0,\"level\":0,\"verified\":false,\"loggedIn\":false,\"admin\":false}"));
+    }
+
+
+    @Test
+    public void testGetNullAccount() throws Exception {
+        String email = "wrongEmail@mail.com";
+
+        // Verify that an exception is thrown when the methods gets a non-existing email
+        mockMvc.perform(get("/account/" + email)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
     
   @Test
   public void testChangePassword() throws Exception {
