@@ -10,6 +10,8 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import ECSE428Project.model.Question;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -79,5 +81,30 @@ public class QuizServiceTest {
 		when(quizRepository.findAll()).thenReturn(quizs);
 		List<Quiz> actual = quizService.getAllQuizzes();
 		assertArrayEquals(quizs.toArray(), actual.toArray());
+	}
+
+	@Test
+	public void testGetQuizQuestions() {
+		// Initialize a quiz and a question
+		Quiz quiz = new Quiz();
+		quiz.setName("quizName");
+
+		List<String> answers = new ArrayList();
+		answers.add("1");
+		answers.add("2");
+		answers.add("4");
+
+		Question question = new Question("What is 2+2?", answers, "4");
+		quiz.addQuestion(question);
+
+		// Mock the repository
+		when(quizRepository.findByName(quiz.getName())).thenReturn(quiz);
+
+		// Call the get quiz questions method
+		List<Question> questions = quizService.getQuizQuestions(quiz.getName());
+
+		// Verify that the output is as expected
+		assertEquals(questions.size(), 1);
+		assertEquals(questions.get(0).getAskedQuestion(), question.getAskedQuestion());
 	}
 }
