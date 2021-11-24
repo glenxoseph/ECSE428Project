@@ -148,10 +148,8 @@ public class AccountController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The rank is not a number.");
         }
 
-        return null;
-        // These lines will be uncommented when the service method is added
-        //Account account = accountService.assignRankToAccount(email, Integer.parseInt(rankString);
-        //return convertToDto(account);
+        Account account = accountService.assignRankToAccount(email, Integer.parseInt(rankString));
+        return convertToDto(account);
     }
 
     private boolean validateAccountCreateDto(AccountCreateDto accountCreateDto) {
