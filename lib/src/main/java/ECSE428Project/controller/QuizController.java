@@ -2,6 +2,9 @@ package ECSE428Project.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import ECSE428Project.dto.QuestionDto;
+import ECSE428Project.model.Question;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -51,5 +54,18 @@ public class QuizController {
 		List<QuizDto> dtoQuizzes = new ArrayList<>();
 		quizService.createQuizzes(quizzes).iterator().forEachRemaining(quiz -> dtoQuizzes.add(QuizDto.toDto(quiz)));
 		return dtoQuizzes;
+	}
+
+	@GetMapping(path = { "/quiz/{quizName}/questions", "/quiz/{quizName}/questions/" })
+	public List<QuestionDto> getQuizQuestions(@PathVariable (name = "quizName") String quizName) throws ResponseStatusException {
+		quizName = quizName.replace("%20", " ");
+		List<Question> quizQuestions = quizService.getQuizQuestions(quizName);
+		List<QuestionDto> quizQuestionsDto = new ArrayList<>();
+
+		for(Question question : quizQuestions) {
+			quizQuestionsDto.add(QuestionDto.toDto(question));
+		}
+
+		return quizQuestionsDto;
 	}
 }

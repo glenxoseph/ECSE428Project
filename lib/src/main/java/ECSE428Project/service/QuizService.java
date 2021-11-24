@@ -5,10 +5,13 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import ECSE428Project.model.Question;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import ECSE428Project.dao.QuizRepository;
 import ECSE428Project.model.Quiz;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class QuizService {
@@ -57,4 +60,14 @@ public class QuizService {
 		return quizRepository.findByName(quizName);
 	}
 
+	@Transactional
+	public List<Question> getQuizQuestions(String quizName) {
+		Quiz quiz = getQuizByName(quizName);
+
+		if (quiz == null) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "There are no quizzes with this name.");
+		} else {
+			return quiz.getQuestions();
+		}
+	}
 }

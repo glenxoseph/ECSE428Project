@@ -71,6 +71,14 @@ public class QuizControllerTest {
 	}
 
 	@Test
+	public void testGetQuizQuestions() throws Exception {
+		mockMvc.perform(get("/quiz/The%20boring%20quiz/questions")
+				.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
+				.andExpect(content().json("[{\"question\":\"How much is too much?\",\"possibleAnswers\":[\"12\",\"24\",\"80\"],\"message\":\"-\"}]"));
+	}
+
+	@Test
 	public void createQuizzes() throws Exception {
 		List<Quiz> quizzes = new ArrayList<>();
 		Quiz quiz = new Quiz();
