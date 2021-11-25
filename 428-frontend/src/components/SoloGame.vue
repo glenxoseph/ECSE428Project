@@ -30,6 +30,10 @@
       <h5 v-show="messageVisibility">{{message}}</h5>
     </div>
 
+    <div>
+      <h5 v-show="correctAnswerVisibility">{{correctAnswer}}</h5>
+    </div>
+
   </div>
 </template>
 
@@ -57,7 +61,9 @@ export default {
       failureMessage: '',
       failureMessageVisibility: false,
       message: '',
-      messageVisibility: false
+      messageVisibility: false,
+      correctAnswer: '',
+      correctAnswerVisibility: false
     }
   },
   methods: {
@@ -102,8 +108,10 @@ export default {
       } else {
         this.answer = ''
         this.failureMessageVisibility = true
+        this.correctAnswerVisibility = true
         this.failureMessage = "Wrong answer, better luck next time!"
-        setTimeout(() => this.failureMessageVisibility = false + this.continueQuiz(), 2000)
+        this.correctAnswer = "The correct answer was: " + this.questions[this.counter].answer
+        setTimeout(() => { this.failureMessageVisibility = false, this.correctAnswerVisibility = false, this.continueQuiz() }, 2000)
       }
     },
     continueQuiz() {
