@@ -12,6 +12,7 @@ import DeleteAccount from '@/components/DeleteAccount'
 import BannedAccounts from '@/components/BannedAccounts'
 import CreateAccount from "../components/CreateAccount";
 import QuizSelection from "../components/QuizSelection";
+import SoloGame from "../components/SoloGame";
 
 Vue.use(Router)
 
@@ -77,6 +78,11 @@ export default new Router({
       path: '/quizSelection',
       name: 'QuizSelection',
       component: QuizSelection
+    },
+    {
+      path: '/soloGame',
+      name: 'SoloGame',
+      component: SoloGame
     }
   ]
 })
