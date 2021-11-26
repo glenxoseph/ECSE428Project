@@ -69,6 +69,8 @@ export default {
   },
    created() {
      this.getQuizzes()
+     localStorage.removeItem('quizName')
+     console.log(localStorage.getItem('quizName'))
    },
   methods: {
     getQuizzes: function() {
@@ -93,7 +95,8 @@ export default {
       axios.get("http://localhost:8081/quiz/" + quiz, null)
         .then(response => {
           console.log(response.data)
-          //this.$router.push('/quizPage')
+          localStorage.setItem('quizName', quiz)
+          this.$router.push('/soloGame')
         })
         .catch(error => {
           console.log(error)

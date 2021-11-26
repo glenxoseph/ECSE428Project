@@ -7,6 +7,7 @@ public class QuestionDto {
 	String questionId;
 	String question;
 	String[] possibleAnswers;
+	String answer;
 	String message;
 
 	public String getMessage() {
@@ -29,6 +30,7 @@ public class QuestionDto {
 		QuestionDto dto = new QuestionDto();
 		dto.question = question.getAskedQuestion();
 		dto.questionId = question.getId();
+		dto.answer = question.getAnswer();
 		dto.possibleAnswers = new String[question.getPossibleAnswers().size()];
 		for (int i = 0; i < question.getPossibleAnswers().size(); i++) {
 			dto.possibleAnswers[i] = question.getPossibleAnswers().get(i);
@@ -61,4 +63,8 @@ public class QuestionDto {
 	public void setPossibleAnswers(String[] possibleAnswers) {
 		this.possibleAnswers = possibleAnswers;
 	}
+
+	public String getAnswer() {return answer; }
+
+	public void setAnswer(String answer) { this.answer = answer; }
 }
