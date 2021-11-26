@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface LeaderboardRepository extends CrudRepository<Leaderboard, String> {
     List<Leaderboard> findLeaderboardByAccountEmail(String accountEmail);
+    void deleteLeaderboardByAccountEmail(String accountEmail);
 }

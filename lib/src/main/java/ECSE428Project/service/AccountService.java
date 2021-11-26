@@ -1,7 +1,7 @@
 package ECSE428Project.service;
 
 import ECSE428Project.dao.AccountRepository;
-import ECSE428Project.dto.AccountDto;
+import ECSE428Project.dao.LeaderboardRepository;
 import ECSE428Project.model.Account;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +17,9 @@ public class AccountService {
 
     @Autowired
     private AccountRepository accountRepository;
+
+    @Autowired
+    private LeaderboardRepository leaderboardRepository;
 
     @Transactional
     public Account createAccount(String name, String email, String password) {
@@ -73,6 +76,8 @@ public class AccountService {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Incorrect Password Provided");
 
             }
+
+            leaderboardRepository.deleteLeaderboardByAccountEmail(account.getEmail());
             accountRepository.delete(account);
         }
 

@@ -35,7 +35,7 @@
         </thead>
 
         <tbody>
-          <tr class="clickableRow" v-for="quiz in quizzes">
+          <tr v-for="quiz in quizzes">
             <td>{{ quiz.name }}</td>
             <td>{{ quiz.topic }}</td>
             <td>{{ quiz.nbQuestion }}</td>
