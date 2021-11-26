@@ -6,12 +6,22 @@
       </div>
 
       <div>
-      <h2>{{quizName}}</h2>
+        <b-container>
+          <b-row align-h="end">
+            <b-col cols="4">
+              <h2>{{quizName}}</h2>
+            </b-col>
+            <b-col cols="4">
+              <h3>{{counter + 1}}/{{questionNumber}}</h3>
+            </b-col>
+          </b-row>
+        </b-container>
     </div>
 
     <div class="question">
       <h5>{{askedQuestion}}</h5>
     </div>
+
     <div class="buttons">
       <b-button variant="outline-dark" v-model="answer" size="lg" @click="answer = answer1">{{answer1}}</b-button>
       <b-button variant="outline-dark" v-model="answer" size="lg" @click="answer = answer2">{{answer2}}</b-button>
@@ -32,6 +42,12 @@
 
     <div>
       <h5 v-show="correctAnswerVisibility">{{correctAnswer}}</h5>
+    </div>
+
+    <div class="matchHistoryButton">
+      <b-button variant="outline-primary" size="lg" v-show="buttonVisibility" @click="goToMatchHistory">
+        View Quiz History
+      </b-button>
     </div>
 
   </div>
@@ -63,7 +79,8 @@ export default {
       message: '',
       messageVisibility: false,
       correctAnswer: '',
-      correctAnswerVisibility: false
+      correctAnswerVisibility: false,
+      buttonVisibility: false
     }
   },
   methods: {
@@ -119,6 +136,22 @@ export default {
         let score = (this.correctAnswerCounter / this.questionNumber).toFixed(2)
         this.messageVisibility = true
         this.message = "The quiz is over. Your score was: " + score * 100 + "%"
+        this.buttonVisibility = true
+        let quizScore = score * 100 +"%"
+        const uuidv4 = require("uuid/v4")
+        uuidv4()
+        axios.post("http://localhost:8081/leaderboard/createEntry", {
+            "quizName": localStorage.getItem('quizName'),
+            "quizScore": quizScore.toString(),
+            "accountEmail": localStorage.getItem('username'),
+            "id": uuidv4()
+          })
+          .then(response => {
+            console.log(response.data)
+        })
+          .catch(error => {
+            console.log(error.response.data.message)
+          })
       } else {
         this.counter++
         this.populateQuestionAndAnswers(this.counter)
@@ -130,6 +163,12 @@ export default {
       this.answer2 = this.questions[questionNumber].possibleAnswers[1]
       this.answer3 = this.questions[questionNumber].possibleAnswers[2]
       this.answer4 = this.questions[questionNumber].possibleAnswers[3]
+    },
+    goToMatchHistory() {
+      this.message = ''
+      this.messageVisibility = ''
+      this.buttonVisibility = false
+      this.$router.push('/matchHistory')
     }
   },
   created() {
@@ -161,6 +200,10 @@ export default {
 
 .failureMessage {
   color: darkred;
+}
+
+.matchHistoryButton {
+  padding-top: 30px;
 }
 
 </style>
