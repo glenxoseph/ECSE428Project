@@ -23,15 +23,15 @@
     </div>
 
     <div class="buttons">
-      <b-button variant="outline-dark" v-model="answer" size="lg" @click="answer = answer1">{{answer1}}</b-button>
-      <b-button variant="outline-dark" v-model="answer" size="lg" @click="answer = answer2">{{answer2}}</b-button>
+      <b-button :pressed.sync="button1" variant="outline-dark" v-model="answer" size="lg" @click="answer = answer1, button1 = true">{{answer1}}</b-button>
+      <b-button :pressed.sync="button2" variant="outline-dark" v-model="answer" size="lg" @click="answer = answer2, button2 = true">{{answer2}}</b-button>
     </div>
     <div>
-      <b-button variant="outline-dark" v-model="answer" size="lg" @click="answer = answer3">{{answer3}}</b-button>
-      <b-button variant="outline-dark" v-model="answer" size="lg" @click="answer = answer4">{{answer4}}</b-button>
+      <b-button :pressed.sync="button3" variant="outline-dark" v-model="answer" size="lg" @click="answer = answer3, button3 = true">{{answer3}}</b-button>
+      <b-button :pressed.sync="button4" variant="outline-dark" v-model="answer" size="lg" @click="answer = answer4, button4 = true">{{answer4}}</b-button>
     </div>
     <div class="confirmButton">
-      <b-button variant="outline-success" size="lg" :disabled="!answer" @click="confirmAnswer(answer)">Confirm Answer</b-button>
+      <b-button variant="success" size="lg" :disabled="!answer" @click="confirmAnswer(answer)">Confirm Answer</b-button>
     </div>
 
     <div>
@@ -80,7 +80,11 @@ export default {
       messageVisibility: false,
       correctAnswer: '',
       correctAnswerVisibility: false,
-      buttonVisibility: false
+      buttonVisibility: false,
+      button1: false,
+      button2: false,
+      button3: false,
+      button4: false
     }
   },
   methods: {
@@ -116,23 +120,23 @@ export default {
       this.correctAnswerCounter = 0
     },
     confirmAnswer(answer) {
-      if (answer == this.questions[this.counter].answer) {
+      if (answer === this.questions[this.counter].answer) {
         this.answer = ''
         this.successMessageVisibility = true
         this.successMessage = "Correct answer!"
         this.correctAnswerCounter++
-        setTimeout(() => this.successMessageVisibility = false + this.continueQuiz(), 2000)
+        setTimeout(() => { this.successMessageVisibility = false, this.continueQuiz(), this.untoggleButtons()} , 1500)
       } else {
         this.answer = ''
         this.failureMessageVisibility = true
         this.correctAnswerVisibility = true
         this.failureMessage = "Wrong answer, better luck next time!"
         this.correctAnswer = "The correct answer was: " + this.questions[this.counter].answer
-        setTimeout(() => { this.failureMessageVisibility = false, this.correctAnswerVisibility = false, this.continueQuiz() }, 2000)
+        setTimeout(() => { this.failureMessageVisibility = false, this.correctAnswerVisibility = false, this.continueQuiz(), this.untoggleButtons()}, 2300)
       }
     },
     continueQuiz() {
-      if (this.counter == (this.questionNumber - 1)) {
+      if (this.counter === (this.questionNumber - 1)) {
         let score = (this.correctAnswerCounter / this.questionNumber).toFixed(2)
         this.messageVisibility = true
         this.message = "The quiz is over. Your score was: " + score * 100 + "%"
@@ -169,6 +173,12 @@ export default {
       this.messageVisibility = ''
       this.buttonVisibility = false
       this.$router.push('/matchHistory')
+    },
+    untoggleButtons() {
+      this.button1 = false
+      this.button2 = false
+      this.button3 = false
+      this.button4 = false
     }
   },
   created() {
