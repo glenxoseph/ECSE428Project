@@ -6,12 +6,22 @@
       </div>
 
       <div>
-      <h2>{{quizName}}</h2>
+        <b-container>
+          <b-row align-h="end">
+            <b-col cols="4">
+              <h2>{{quizName}}</h2>
+            </b-col>
+            <b-col cols="4">
+              <h3>{{counter + 1}}/{{questionNumber}}</h3>
+            </b-col>
+          </b-row>
+        </b-container>
     </div>
 
     <div class="question">
       <h5>{{askedQuestion}}</h5>
     </div>
+
     <div class="buttons">
       <b-button variant="outline-dark" v-model="answer" size="lg" @click="answer = answer1">{{answer1}}</b-button>
       <b-button variant="outline-dark" v-model="answer" size="lg" @click="answer = answer2">{{answer2}}</b-button>
