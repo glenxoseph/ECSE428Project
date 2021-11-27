@@ -167,8 +167,11 @@ public class AccountService {
       if (optAccount.isPresent()){
           account = optAccount.get();
 
+          int oldScore = account.getScore();
+          int newScore = oldScore + score;
+
           // Set the new score to the account
-          account.setScore(score);
+          account.setScore(newScore);
           account = accountRepository.save(account);
 
       } else {

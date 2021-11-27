@@ -7,6 +7,17 @@
 
     <h1 id="title"> Match History </h1>
 
+    <b-container id="scoreAndRank">
+      <b-row align-h="center">
+        <b-col cols="3.5">
+          <h5>Number of Correct Answers: {{ score }}</h5>
+        </b-col>
+        <b-col cols="2">
+          <h5>Rank: {{ rank }}</h5>
+        </b-col>
+      </b-row>
+    </b-container>
+
     <b-container>
       <b-row align-h="center">
         <b-col cols="6">
@@ -42,7 +53,9 @@ export default {
   name: "MatchHistory",
   data() {
     return {
-      leaderboardEntries: ''
+      leaderboardEntries: '',
+      score: '',
+      rank: ''
     }
   },
   methods: {
@@ -55,10 +68,23 @@ export default {
         .catch(error => {
           console.log(error.response)
         })
+    },
+    getAccount(accountEmail) {
+      axios.get("http://localhost:8081/account/" + accountEmail)
+      .then(response => {
+        console.log(response.data.score)
+        this.score = response.data.score
+        let score = response.data.score
+        this.rank = (score / 10).toFixed(0)
+      })
+      .catch(error => {
+        console.log(error.response)
+      })
     }
   },
   created() {
     this.getLeaderboard(localStorage.getItem('username'))
+    this.getAccount(localStorage.getItem('username'))
   }
 }
 
@@ -68,7 +94,11 @@ export default {
 <style>
 
 #title {
-  padding-bottom: 40px;
+  padding-bottom: 20px;
+}
+
+#scoreAndRank {
+  padding-bottom: 20px;
 }
 
 </style>
