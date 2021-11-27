@@ -120,7 +120,7 @@ export default {
       this.correctAnswerCounter = 0
     },
     confirmAnswer(answer) {
-      if (answer === this.questions[this.counter].answer) {
+      if (answer == this.questions[this.counter].answer) {
         this.answer = ''
         this.successMessageVisibility = true
         this.successMessage = "Correct answer!"
@@ -138,12 +138,12 @@ export default {
       }
     },
     continueQuiz() {
-      if (this.counter === (this.questionNumber - 1)) {
-        let score = (this.correctAnswerCounter / this.questionNumber).toFixed(2)
+      if (this.counter == (this.questionNumber - 1)) {
+        let score = ((this.correctAnswerCounter / this.questionNumber) * 100).toFixed(2)
         this.messageVisibility = true
-        this.message = "The quiz is over. Your score was: " + score * 100 + "%"
+        this.message = "The quiz is over. Your score was: " + score + "%"
         this.buttonVisibility = true
-        let quizScore = score * 100 +"%"
+        let quizScore = score +"%"
         const uuidv4 = require("uuid/v4")
         uuidv4()
         axios.post("http://localhost:8081/leaderboard/createEntry", {
