@@ -139,7 +139,7 @@ export default {
     },
     continueQuiz() {
       if (this.counter == (this.questionNumber - 1)) {
-        let score = ((this.correctAnswerCounter / this.questionNumber) * 100).toFixed(2)
+        let score = ((this.correctAnswerCounter / this.questionNumber) * 100).toFixed(0)
         this.messageVisibility = true
         this.message = "The quiz is over. Your score was: " + score + "%"
         this.buttonVisibility = true
@@ -155,6 +155,18 @@ export default {
           .then(response => {
             console.log(response.data)
         })
+          .catch(error => {
+            console.log(error.response.data.message)
+          })
+        axios.put("http://localhost:8081/account/email/score", null, {
+          params: {
+            'email': localStorage.getItem('username'),
+            'score': this.correctAnswerCounter.toString()
+          }
+          })
+          .then(response => {
+            console.log(response.data)
+          })
           .catch(error => {
             console.log(error.response.data.message)
           })
