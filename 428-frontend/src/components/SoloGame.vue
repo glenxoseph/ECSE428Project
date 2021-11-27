@@ -23,15 +23,15 @@
     </div>
 
     <div class="buttons">
-      <b-button variant="outline-dark" v-model="answer" size="lg" @click="answer = answer1">{{answer1}}</b-button>
-      <b-button variant="outline-dark" v-model="answer" size="lg" @click="answer = answer2">{{answer2}}</b-button>
+      <b-button :pressed.sync="button1" variant="outline-dark" v-model="answer" size="lg" @click="answer = answer1, selectButton('button1')">{{answer1}}</b-button>
+      <b-button :pressed.sync="button2" variant="outline-dark" v-model="answer" size="lg" @click="answer = answer2, selectButton('button2')">{{answer2}}</b-button>
     </div>
     <div>
-      <b-button variant="outline-dark" v-model="answer" size="lg" @click="answer = answer3">{{answer3}}</b-button>
-      <b-button variant="outline-dark" v-model="answer" size="lg" @click="answer = answer4">{{answer4}}</b-button>
+      <b-button :pressed.sync="button3" variant="outline-dark" v-model="answer" size="lg" @click="answer = answer3, selectButton('button3')">{{answer3}}</b-button>
+      <b-button :pressed.sync="button4" variant="outline-dark" v-model="answer" size="lg" @click="answer = answer4, selectButton('button4')">{{answer4}}</b-button>
     </div>
     <div class="confirmButton">
-      <b-button variant="outline-success" size="lg" :disabled="!answer" @click="confirmAnswer(answer)">Confirm Answer</b-button>
+      <b-button variant="success" size="lg" :disabled="!answer" @click="confirmAnswer(answer)">Confirm Answer</b-button>
     </div>
 
     <div>
@@ -80,7 +80,11 @@ export default {
       messageVisibility: false,
       correctAnswer: '',
       correctAnswerVisibility: false,
-      buttonVisibility: false
+      buttonVisibility: false,
+      button1: false,
+      button2: false,
+      button3: false,
+      button4: false
     }
   },
   methods: {
@@ -121,23 +125,25 @@ export default {
         this.successMessageVisibility = true
         this.successMessage = "Correct answer!"
         this.correctAnswerCounter++
-        setTimeout(() => this.successMessageVisibility = false + this.continueQuiz(), 2000)
+        setTimeout(() => this.toggleButtons(), 1400)
+        setTimeout(() => { this.successMessageVisibility = false, this.continueQuiz()} , 1500)
       } else {
         this.answer = ''
         this.failureMessageVisibility = true
         this.correctAnswerVisibility = true
         this.failureMessage = "Wrong answer, better luck next time!"
         this.correctAnswer = "The correct answer was: " + this.questions[this.counter].answer
-        setTimeout(() => { this.failureMessageVisibility = false, this.correctAnswerVisibility = false, this.continueQuiz() }, 2000)
+        setTimeout(() => this.toggleButtons(), 2200)
+        setTimeout(() => { this.failureMessageVisibility = false, this.correctAnswerVisibility = false, this.continueQuiz()}, 2300)
       }
     },
     continueQuiz() {
       if (this.counter == (this.questionNumber - 1)) {
-        let score = (this.correctAnswerCounter / this.questionNumber).toFixed(2)
+        let score = ((this.correctAnswerCounter / this.questionNumber) * 100).toFixed(2)
         this.messageVisibility = true
-        this.message = "The quiz is over. Your score was: " + score * 100 + "%"
+        this.message = "The quiz is over. Your score was: " + score + "%"
         this.buttonVisibility = true
-        let quizScore = score * 100 +"%"
+        let quizScore = score +"%"
         const uuidv4 = require("uuid/v4")
         uuidv4()
         axios.post("http://localhost:8081/leaderboard/createEntry", {
@@ -169,6 +175,38 @@ export default {
       this.messageVisibility = ''
       this.buttonVisibility = false
       this.$router.push('/matchHistory')
+    },
+    toggleButtons() {
+      this.button1 = false
+      this.button2 = false
+      this.button3 = false
+      this.button4 = false
+    },
+    selectButton(button) {
+      if (button === "button1") {
+        this.button1 = true
+        this.button2 = false
+        this.button3 = false
+        this.button4 = false
+      }
+      if (button === "button2") {
+        this.button2 = true
+        this.button1 = false
+        this.button3 = false
+        this.button4 = false
+      }
+      if (button === "button3") {
+        this.button3 = true
+        this.button1 = false
+        this.button2 = false
+        this.button4 = false
+      }
+      if (button === "button4") {
+        this.button4 = true
+        this.button1 = false
+        this.button2 = false
+        this.button3 = false
+      }
     }
   },
   created() {
