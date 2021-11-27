@@ -13,7 +13,7 @@
           <h5>Number of Correct Answers: {{ score }}</h5>
         </b-col>
         <b-col cols="2">
-          <h5>Rank: {{ rank }}</h5>
+          <h5>Level: {{ level }}</h5>
         </b-col>
       </b-row>
     </b-container>
@@ -55,7 +55,7 @@ export default {
     return {
       leaderboardEntries: '',
       score: '',
-      rank: ''
+      level: ''
     }
   },
   methods: {
@@ -75,7 +75,19 @@ export default {
         console.log(response.data.score)
         this.score = response.data.score
         let score = response.data.score
-        this.rank = (score / 10).toFixed(0)
+        this.level = Math.floor((score / 10))
+        axios.put("http://localhost:8081/account/email/rank", null, {
+          params: {
+            "email": localStorage.getItem('username'),
+            "rank": this.level.toString()
+          }
+        })
+        .then(response => {
+          console.log(response.data)
+        })
+        .catch(error => {
+          console.log(error.response)
+        })
       })
       .catch(error => {
         console.log(error.response)
