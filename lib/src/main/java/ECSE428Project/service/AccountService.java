@@ -1,7 +1,7 @@
 package ECSE428Project.service;
 
 import ECSE428Project.dao.AccountRepository;
-import ECSE428Project.dto.AccountDto;
+import ECSE428Project.dao.LeaderboardRepository;
 import ECSE428Project.model.Account;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +17,9 @@ public class AccountService {
 
     @Autowired
     private AccountRepository accountRepository;
+
+    @Autowired
+    private LeaderboardRepository leaderboardRepository;
 
     @Transactional
     public Account createAccount(String name, String email, String password) {
@@ -36,6 +39,18 @@ public class AccountService {
 
         account = accountRepository.save(account);
         return account;
+    }
+
+
+    @Transactional
+    public Account getAccount(String email) {
+        Optional<Account> optionalAccount = accountRepository.findById(email);
+
+        if (!optionalAccount.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "There is no account associated to this email");
+        } else {
+            return optionalAccount.get();
+        }
     }
 
     @Transactional
@@ -61,14 +76,14 @@ public class AccountService {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Incorrect Password Provided");
 
             }
+
+            leaderboardRepository.deleteLeaderboardByAccountEmail(account.getEmail());
             accountRepository.delete(account);
         }
 
 
 
     }
-
-
 
 
     @Transactional
@@ -142,6 +157,51 @@ public class AccountService {
 	  }
 	  return false;
   }
+
+  @Transactional
+  public Account assignScoreToAccount(String email, int score) {
+      Optional<Account> optAccount = accountRepository.findById(email);
+      Account account;
+
+      // Check that the account exists in the database
+      if (optAccount.isPresent()){
+          account = optAccount.get();
+
+          int oldScore = account.getScore();
+          int newScore = oldScore + score;
+
+          // Set the new score to the account
+          account.setScore(newScore);
+          account = accountRepository.save(account);
+
+      } else {
+          // Throw exception if the account doesn't exist
+          throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This account does not exist");
+      }
+
+      return account;
+  }
+
+    @Transactional
+    public Account assignRankToAccount(String email, int rank) {
+        Optional<Account> optAccount = accountRepository.findById(email);
+        Account account;
+
+        // Check that the account exists in the database
+        if (optAccount.isPresent()){
+            account = optAccount.get();
+
+            // Set the new rank to the account
+            account.setLevel(rank);
+            account = accountRepository.save(account);
+
+        } else {
+            // Throw exception if the account doesn't exist
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This account does not exist");
+        }
+
+        return account;
+    }
 
 
     private static final Pattern VALID_EMAIL_REGEX = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$",

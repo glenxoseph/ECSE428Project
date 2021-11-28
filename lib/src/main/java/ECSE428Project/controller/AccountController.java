@@ -43,6 +43,18 @@ public class AccountController {
     }
 
 
+    @GetMapping(path = "/account/{email}")
+    public AccountDto getAccount(@PathVariable (name = "email") String email) throws ResponseStatusException {
+
+        // Verify that the input email is not null
+        if(email == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email cannot be null");
+        }
+
+        // Call the getAccount service method and return the account it gets as a DTO
+        return convertToDto(accountService.getAccount(email));
+    }
+
     /**
      * Deletes an account
      */
@@ -111,15 +123,13 @@ public class AccountController {
             throws ResponseStatusException {
 
         try {
-            Double.parseDouble(scoreString);
+            Integer.parseInt(scoreString);
         } catch (NumberFormatException error) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The score is not a number.");
         }
 
-        return null;
-        // These lines will be uncommented when the service method is added
-        //Account account = accountService.assignScoreToAccount(email, Double.parseDouble(scoreString));
-        //return convertToDto(account);
+        Account account = accountService.assignScoreToAccount(email, Integer.parseInt(scoreString));
+        return convertToDto(account);
     }
 
     /**
@@ -138,10 +148,8 @@ public class AccountController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The rank is not a number.");
         }
 
-        return null;
-        // These lines will be uncommented when the service method is added
-        //Account account = accountService.assignRankToAccount(email, Integer.parseInt(rankString);
-        //return convertToDto(account);
+        Account account = accountService.assignRankToAccount(email, Integer.parseInt(rankString));
+        return convertToDto(account);
     }
 
     private boolean validateAccountCreateDto(AccountCreateDto accountCreateDto) {

@@ -3,14 +3,9 @@ package ECSE428Project.model;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -21,9 +16,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -38,11 +31,13 @@ public class Match {
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String matchId;
-
     private String winnerId;
     private String winnerName;
     private GameMode gameMode;
     private Options options;
+    
+    @ManyToOne
+    private Quiz quiz;
 
 
     //------------------------
@@ -51,17 +46,15 @@ public class Match {
 
     @Cascade(CascadeType.ALL)
 	@ManyToMany(fetch = FetchType.EAGER)
+    @Fetch (FetchMode.SELECT)
 	@JoinTable(name = "match_account", joinColumns = { @JoinColumn(name = "match_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "account_id") })
     private Set<Account> accounts;
 
-    @ManyToOne(optional = true)
-    private Player player;
-
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @OneToMany
-    private List<Round> rounds;
-
+    @OneToMany(fetch = FetchType.EAGER)
+    @Cascade(CascadeType.ALL)
+    @Fetch (FetchMode.SELECT)
+    private Set<Player> players;
 
     //------------------------
     // CONSTRUCTOR
@@ -74,8 +67,7 @@ public class Match {
         gameMode = null;
         options = null;
         accounts = new HashSet<Account>();
-        player = null;
-        rounds = new ArrayList<>();
+        players = new HashSet<Player>();
     }
 
     public Match(String aMatchId, String aWinnerId, String aWinnerName, GameMode aGameMode, Options someOptions, Player aPlayer) {
@@ -84,8 +76,7 @@ public class Match {
         winnerName = aWinnerName;
         gameMode = aGameMode;
         options = someOptions;
-        setPlayer(aPlayer);
-        rounds = new ArrayList<>();
+        addPlayer(aPlayer);
         accounts = new HashSet<Account>();
     }
 
@@ -107,9 +98,7 @@ public class Match {
 
     public Set<Account> getAccounts() { return accounts; }
 
-    public Player getPlayer() { return player; }
-
-    public List<Round> getRounds() { return rounds; }
+    public Set<Player> getPlayers() { return players; }
 
     public void setMatchId(String matchId) { this.matchId = matchId; }
 
@@ -121,9 +110,7 @@ public class Match {
 
     public void setOptions(Options options) { this.options = options; }
 
-    public void setPlayer(Player player) { this.player = player; }
-
-    public void setRounds(List<Round> rounds) { this.rounds = rounds; }
+    public void addPlayer(Player player) { this.players.add(player); }
     
     public void setAccounts(Set<Account> accounts) {
     	this.accounts = accounts;
@@ -148,12 +135,17 @@ public class Match {
 			account.removeMatch(this);
 		}
 	}
+	
+	public Quiz getQuiz() {
+		return quiz;
+	}
+	
+	public void setQuiz(Quiz quiz) {
+		this.quiz = quiz;
+	}
 
 	@Override
 	public boolean equals(Object o) {
-		if (o instanceof Match && ((Match) o).matchId.equals(this.matchId)) {
-			return true;
-		}
-		return false;
+		return o instanceof Match && this.matchId != null && this.matchId.equals(((Match) o).matchId);
 	}
 }

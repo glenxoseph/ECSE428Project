@@ -77,6 +77,7 @@ export default {
           })
           .then(response => {
             console.log(response.data)
+            localStorage.setItem("username", email)
             console.log(localStorage.getItem("username"))
             this.$router.push('/home')
           })
@@ -95,6 +96,9 @@ export default {
         })
       }
     }
+  },
+  created() {
+    console.log(localStorage.getItem("username"))
   }
 }
 </script>

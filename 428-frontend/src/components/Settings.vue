@@ -73,6 +73,9 @@ export default {
         this.$router.push('/bannedAccounts')
       }
     }
+  },
+  created() {
+    console.log(localStorage.getItem("username"))
   }
 }
 </script>

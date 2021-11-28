@@ -12,6 +12,8 @@ public class DataTransferObjects {
         accountDto.setName(account.getName());
         accountDto.setEmail(account.getEmail());
         accountDto.setPassword(account.getPassword());
+        accountDto.setLevel(account.getLevel());
+        accountDto.setScore(account.getScore());
 
         return accountDto;
 

@@ -16,11 +16,15 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
@@ -94,7 +98,7 @@ public class AccountServiceTest {
         // Verify that accountRepository.save() was never called
         verify(accountRepository, never()).save(any(Account.class));
     }
-
+    
   @Test
   public void testChangePassword() {
     String name = "accountName1", email = "max@hotmail.com", oldPassword = "password1", newPassword = "password2";
@@ -286,4 +290,5 @@ public class AccountServiceTest {
                         accountService.deleteAccount("wrongEmail", password),
                 "j");
     }
+
 }
