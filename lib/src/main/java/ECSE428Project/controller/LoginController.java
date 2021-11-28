@@ -1,6 +1,5 @@
 package ECSE428Project.controller;
 
-
 import ECSE428Project.dto.AccountDto;
 import ECSE428Project.service.AdminConfigService;
 import ECSE428Project.service.LoginService;

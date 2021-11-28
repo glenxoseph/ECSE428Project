@@ -32,8 +32,6 @@ public class LoginService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"No account associated to the provided credentials");
         }
 
-        //Account profile = accountRepository.findAccountByEmail(email);
-
         if (profile == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No account associated to the provided credentials");
         }

@@ -2,33 +2,16 @@ package ECSE428Project.service;
 
 import ECSE428Project.dao.AccountRepository;
 import ECSE428Project.model.Account;
-import ECSE428Project.model.TestUtilities;
-
-import org.junit.Before;
-import org.junit.After;
-import org.junit.jupiter.api.*;
-
-//???
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
-
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.web.server.ResponseStatusException;
-
-import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
@@ -56,8 +39,6 @@ public class LogoutServiceTest {
 
         //empty the repository
         accountRepository.deleteAll();
-
-        //System.out.println(accountRepository.count());
 
         // Create a new "wrong" account with the input password, name, and email
         Account wrongAccount = new Account("wrongName", wrongEmail, "wrongPassword", false, true, 0, 0);
@@ -108,11 +89,4 @@ public class LogoutServiceTest {
         assertFalse(dummyAccount.isLoggedIn(),
                 "LogoutAccount service test failed: Account was not successfully logged out.");
     }
-    /*
-    Possible tests:
-
-        logout after user is idle
-        logout when the user quits the application (without logging out)
-
-     */
 }

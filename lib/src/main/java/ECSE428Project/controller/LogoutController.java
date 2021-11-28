@@ -1,9 +1,7 @@
 package ECSE428Project.controller;
 
 import ECSE428Project.dto.AccountDto;
-import ECSE428Project.model.Account;
 import ECSE428Project.service.LogoutService;
-//import ECSE428Project.controller.LoginController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

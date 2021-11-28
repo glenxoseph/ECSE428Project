@@ -2,24 +2,16 @@ package ECSE428Project.service;
 
 import ECSE428Project.dao.AccountRepository;
 import ECSE428Project.model.Account;
-import ECSE428Project.model.TestUtilities;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
@@ -85,10 +77,5 @@ public class LoginServiceTest {
         //Verify that the loginService.profileLogin method call logs in the dummy account.
         assertTrue(dummyAccount.isLoggedIn(),
                 "LoginAccount Service test failed: Account was not successfully logged in.");
-        //accountRepository.deleteAll();
     }
-    /*
-    Possible tests:
-        ...see Gherkin Test files
-     */
 }
