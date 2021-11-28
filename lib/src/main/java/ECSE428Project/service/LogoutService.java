@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.hibernate.internal.util.collections.ArrayHelper.toList;
 
@@ -39,8 +40,18 @@ public class LogoutService {
         if (email == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email cannot be empty! Please Enter Valid Credentials");
         }
+        Optional<Account> optAccount = accountRepository.findById(email);
+        Account profile;
 
-        Account profile = accountRepository.findAccountByEmail(email);
+        // Check that the account exists in the database
+        if (optAccount.isPresent()) {
+            profile = optAccount.get();
+        } else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"No account associated to the provided credentials");
+        }
+
+        //Account profile = accountRepository.findAccountByEmail(email);
+
         if (profile == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No account associated to the provided credentials");
         }

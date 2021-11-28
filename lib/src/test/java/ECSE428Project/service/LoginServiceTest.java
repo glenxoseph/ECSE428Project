@@ -45,9 +45,6 @@ public class LoginServiceTest {
     @BeforeEach
     public void createDummyAccount() {
 
-        //empty the repository
-        accountRepository.deleteAll();
-
         // Create a new account with the input password, name, and email
         Account wrongAccount = new Account("wrongName", wrongEmail, "wrongPassword", false, false, 0, 0);
         wrongAccount = accountRepository.save(wrongAccount);
@@ -65,14 +62,6 @@ public class LoginServiceTest {
         //Validate that the saved Account entity has: loggedIn == false
         Assertions.assertFalse(testAccount.isLoggedIn(),
                 "Test Aborted: The dummy Account was not created successfully: LoggedIn = false");
-    }
-    /*
-   Delete dummy test accounts in the accountRepository
-   */
-    @AfterEach
-    public void clearTestingAccounts() {
-        accountRepository.deleteAll();
-        assertEquals(0, accountRepository.count());
     }
 
     @Test
@@ -96,6 +85,7 @@ public class LoginServiceTest {
         //Verify that the loginService.profileLogin method call logs in the dummy account.
         assertTrue(dummyAccount.isLoggedIn(),
                 "LoginAccount Service test failed: Account was not successfully logged in.");
+        //accountRepository.deleteAll();
     }
     /*
     Possible tests:
