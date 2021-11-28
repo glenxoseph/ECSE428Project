@@ -71,8 +71,9 @@ public class QuestionControllerTest {
 
     }
 
+    // Integration testing for Business logic/methods for checking the answers (correct or wrong)
     @Test
-    public void testCorrectAnswer() throws Exception {
+    public void testCheckAnswer() throws Exception {
         Account account = TestUtilities.createAccount(1);
         AccountCreateDto accountCreateDto = new AccountCreateDto();
         accountCreateDto.setName(account.getName());
@@ -119,5 +120,7 @@ public class QuestionControllerTest {
                 .andReturn();
 
     }
+
+
 
 }
