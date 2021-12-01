@@ -71,8 +71,8 @@
             this.$router.push('/').catch(()=>{});
           }
         })
-        .catch(e => {
-          this.errors.push(e)
+        .catch(error => {
+          console.log(error.response)
         })
       },
       goToQuizSelectionPage() {
