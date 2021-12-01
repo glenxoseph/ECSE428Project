@@ -1,15 +1,13 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Game from '@/components/Game'
-import SignUp from '@/components/SignUp'
-import MatchHistory from '@/components/MatchHistory'
-import SignIn from '@/components/SignIn'
-import Home from '@/components/Home'
-import Settings from '@/components/Settings'
-import ChangePassword from '@/components/ChangePassword'
-import ChangeEmail from '@/components/ChangeEmail'
-import DeleteAccount from '@/components/DeleteAccount'
-import BannedAccounts from '@/components/BannedAccounts'
+import MatchHistory from '../components/MatchHistory'
+import SignIn from '../components/SignIn'
+import Home from '../components/Home'
+import Settings from '../components/Settings'
+import ChangePassword from '../components/ChangePassword'
+import ChangeEmail from '../components/ChangeEmail'
+import DeleteAccount from '../components/DeleteAccount'
+import BannedAccounts from '../components/BannedAccounts'
 import CreateAccount from "../components/CreateAccount";
 import QuizSelection from "../components/QuizSelection";
 import SoloGame from "../components/SoloGame";
@@ -53,17 +51,6 @@ export default new Router({
       name: 'BannedAccounts',
       component: BannedAccounts
     },
-    {
-      path: '/game',
-      name: 'Game',
-      component: Game
-    },
-    {
-      path: '/signup',
-      name: 'SignUp',
-      component: SignUp
-    }
-    ,
     {
       path: '/matchHistory',
       name: 'MatchHistory',
