@@ -203,6 +203,16 @@ public class AccountService {
         return account;
     }
 
+    @Transactional
+    public void logoutAllAccounts() {
+        Iterable<Account> accountList = accountRepository.findAll();
+
+        for(Account account : accountList) {
+            account.setLoggedIn(false);
+            accountRepository.save(account);
+        }
+    }
+
 
     private static final Pattern VALID_EMAIL_REGEX = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$",
             Pattern.CASE_INSENSITIVE);
