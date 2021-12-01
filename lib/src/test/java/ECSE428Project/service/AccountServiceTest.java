@@ -223,7 +223,7 @@ public class AccountServiceTest {
         // Verify that the method returns the expected results
         assertEquals(email, account.getEmail());
         assertEquals(rank, account.getLevel());
-        verify(accountRepository, never()).save(any(Account.class));
+        verify(accountRepository).save(any(Account.class));
     }
 
 

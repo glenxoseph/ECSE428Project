@@ -48,7 +48,7 @@ dependencies {
 
 task integrationTest(type:Test) {
     useJUnitPlatform {
-        includeTags('IntegrationTest')
+        //includeTags('IntegrationTest')
     }
 }
 

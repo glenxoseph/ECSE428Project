@@ -38,7 +38,7 @@ public class LogoutServiceTest {
     public void createDummyAccount() {
 
         //empty the repository
-        accountRepository.deleteAll();
+        //accountRepository.deleteAll();
 
         // Create a new "wrong" account with the input password, name, and email
         Account wrongAccount = new Account("wrongName", wrongEmail, "wrongPassword", false, true, 0, 0);
