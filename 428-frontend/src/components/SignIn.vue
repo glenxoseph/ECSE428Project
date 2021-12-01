@@ -70,10 +70,19 @@
       },
       goToCreateAccountPage() {
         this.$router.push('/createAccount')
-  }
+      },
+      logoutAllAccounts() {
+        axios.put("http://localhost:8081/logout/all",null,null)
+          .then(() => {
+            localStorage.clear()
+          })
+          .catch(error => {
+            console.log(error.response)
+          })
+      }
     },
     created() {
-      console.log(localStorage.getItem("username"))
+      this.logoutAllAccounts()
     }
   }
 

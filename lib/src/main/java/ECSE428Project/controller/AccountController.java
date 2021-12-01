@@ -152,6 +152,15 @@ public class AccountController {
         return convertToDto(account);
     }
 
+    /**
+     * This method logs out all the accounts
+     * @throws ResponseStatusException
+     */
+    @PutMapping(path = {"/logout/all", "/logout/all/"})
+    public void logoutAllAccounts() throws ResponseStatusException {
+        accountService.logoutAllAccounts();
+    }
+
     private boolean validateAccountCreateDto(AccountCreateDto accountCreateDto) {
         return (accountCreateDto.getEmail() != null
                 && accountCreateDto.getEmail().trim().length() > 0
