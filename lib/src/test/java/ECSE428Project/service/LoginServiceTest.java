@@ -8,10 +8,15 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-
+import org.springframework.web.server.ResponseStatusException;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
+import static org.mockito.Mockito.when;
+import java.util.ArrayList;
+import java.util.List;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
@@ -31,6 +36,8 @@ public class LoginServiceTest {
     @Autowired
     private AccountRepository accountRepository;
 
+    @MockBean
+    private AdminConfigService adminService;
     /*
     Create dummy test accounts in the Repo using the Account Class
     */
@@ -56,6 +63,21 @@ public class LoginServiceTest {
                 "Test Aborted: The dummy Account was not created successfully: LoggedIn = false");
     }
 
+    @Test
+    public void testBannedLoginRequest() {
+
+        System.out.println(accountRepository.count()+" Entities exist in the account repository.");
+        List<String> bannedEmails = new ArrayList<>();
+        bannedEmails.add(accountEmail);
+        when(adminService.getBannedEmails()).thenReturn(bannedEmails);
+        final List<Account> innerAccount = new ArrayList<>();
+        //Call to loginService class method
+        assertThrows(ResponseStatusException.class, () -> innerAccount.add(loginService.profileLogin(accountEmail, accountPassword)), 
+        		"The email associated to this account is banned");
+        assertTrue(innerAccount.size() == 0,
+                "LoginAccount Service test failed: Account was not successfully logged in.");
+    }
+    
     @Test
     public void testLoginRequest() {
 

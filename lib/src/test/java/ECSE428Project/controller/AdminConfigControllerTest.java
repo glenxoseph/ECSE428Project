@@ -2,8 +2,10 @@ package ECSE428Project.controller;
 
 import ECSE428Project.dao.AccountRepository;
 import ECSE428Project.dao.AdminConfigRepository;
+import ECSE428Project.dto.AccountCreateDto;
 import ECSE428Project.model.Account;
 import ECSE428Project.model.AdminConfig;
+import ECSE428Project.model.TestUtilities;
 import ECSE428Project.service.AdminConfigService;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -177,5 +179,59 @@ public class AdminConfigControllerTest {
 
         //Validate that the Account email is not banned
         assertFalse(adminConfigService.getBannedEmails().toString().contains(ACCOUNT_EMAIL));
+    }
+    
+    
+    @Test
+    public void testLoginAfterBan() throws Exception {
+    	createAccount(1);
+        Account account = accountRepository.findAccountByEmail("accountEmail1@a.ca");
+        //Validate that the admin that will ban an email exists
+        Assertions.assertNotNull(account);
+        
+        AdminConfig defaultConfig = new AdminConfig();
+        defaultConfig.addAdminEmail(ADMIN_EMAIL);
+        defaultConfig.addBannedEmail(ACCOUNT_EMAIL);
+        defaultConfig.setName(ADMIN_CONFIG_ID);
+        adminConfigRepository.save(defaultConfig);
+        
+        mockMvc.perform(post("/configs/ban/"+account.getEmail()).content("{\n" +
+                        "\"email\": \"" + ADMIN_EMAIL + "\",\n" +
+                        "\"password\": \"" + ADMIN_PASSWORD + "\"\n" +
+                        "}")
+                        .contentType(MediaType.APPLICATION_JSON))
+                        .andExpect(status().isOk());
+        
+        //Validate that the Account email is banned
+        assertTrue(adminConfigService.getBannedEmails().contains(account.getEmail()));
+        
+        //assert that a login is not successful
+        mockMvc.perform(get("/login")
+                .param("email", account.getEmail())
+                .param("password", account.getPassword()))
+                .andExpect(status().isBadRequest()).andExpect(status().reason("The email associated to this account is banned"));
+
+        account = accountRepository.findAccountByEmail(account.getEmail());
+        boolean isLoggedIn = account.isLoggedIn();
+        assertFalse(isLoggedIn);
+    }
+    
+    
+    public void createAccount(int unique) throws Exception {
+        Account account = TestUtilities.createAccount(unique);
+        AccountCreateDto accountCreateDto = new AccountCreateDto();
+        accountCreateDto.setName(account.getName());
+        accountCreateDto.setEmail(account.getEmail());
+        accountCreateDto.setPassword(account.getPassword());
+
+        mockMvc.perform(post("/createAccount").content("{\n" +
+                "\"name\": \"" +accountCreateDto.getName()+ "\",\n" +
+                "\"email\": \"" +accountCreateDto.getEmail()+ "\",\n" +
+                "\"password\": \"" +accountCreateDto.getPassword()+ "\"\n" +
+                "}")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(content().json("{\"name\":\"accountName1\",\"email\":\"accountEmail1@a.ca\",\"password\":\"password1\"}"));
     }
 }
