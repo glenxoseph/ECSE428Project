@@ -5,6 +5,7 @@ import ECSE428Project.dao.AdminConfigRepository;
 import ECSE428Project.model.Account;
 import ECSE428Project.model.AdminConfig;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.invocation.InvocationOnMock;
@@ -26,6 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertLinesMatch;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@Tag("IntegrationTest")
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 public class AdminConfigServiceTest {
@@ -48,9 +50,7 @@ public class AdminConfigServiceTest {
 		account.setEmail(ADMIN_EMAIL);
 		account.setPassword(ADMIN_PASSWORD);
 		when(accountRepository.findById(ADMIN_EMAIL)).thenReturn(Optional.of(account));
-		Answer<?> returnParameterAsAnswer = (InvocationOnMock invocation) -> {
-			return invocation.getArgument(0);
-		};
+		Answer<?> returnParameterAsAnswer = (InvocationOnMock invocation) -> invocation.getArgument(0);
 		when(adminConfigRepository.save(any(AdminConfig.class))).thenAnswer(returnParameterAsAnswer);
 	}
 

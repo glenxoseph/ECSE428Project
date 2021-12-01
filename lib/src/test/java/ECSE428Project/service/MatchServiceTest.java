@@ -14,6 +14,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.invocation.InvocationOnMock;
@@ -30,6 +32,7 @@ import ECSE428Project.model.Match;
 import ECSE428Project.model.Quiz;
 import ECSE428Project.model.TestUtilities;
 
+@Tag("IntegrationTest")
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 public class MatchServiceTest {
@@ -100,9 +103,7 @@ public class MatchServiceTest {
         accounts.add(account2);
         accounts.add(account3);
         
-        Answer<?> returnParameterAsAnswer = (InvocationOnMock invocation) -> {
-            return invocation.getArgument(0);
-        };
+        Answer<?> returnParameterAsAnswer = (InvocationOnMock invocation) -> invocation.getArgument(0);
         
         when(matchRepository.save(any(Match.class))).thenAnswer(returnParameterAsAnswer);
         Match match = matchService.createMatch(emails);
