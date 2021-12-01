@@ -4,6 +4,7 @@ import ECSE428Project.dao.AccountRepository;
 import ECSE428Project.model.Account;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
+@Tag("IntegrationTest")
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 public class LoginServiceTest {
@@ -39,7 +41,7 @@ public class LoginServiceTest {
 
         // Create a new account with the input password, name, and email
         Account wrongAccount = new Account("wrongName", wrongEmail, "wrongPassword", false, false, 0, 0);
-        wrongAccount = accountRepository.save(wrongAccount);
+        accountRepository.save(wrongAccount);
 
         // Create a new account with the input id, name, and email
         Account testAccount = new Account(accountName, accountEmail, accountPassword, false, false, 0, 0);

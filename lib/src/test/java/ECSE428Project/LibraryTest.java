@@ -4,8 +4,11 @@
 package ECSE428Project;
 
 import org.junit.Test;
+import org.junit.jupiter.api.Tag;
+
 import static org.junit.Assert.*;
 
+@Tag("IntegrationTest")
 public class LibraryTest {
     @Test public void testSomeLibraryMethod() {
         Library classUnderTest = new Library();

@@ -4,6 +4,7 @@ import ECSE428Project.dao.AccountRepository;
 import ECSE428Project.model.Account;
 import ECSE428Project.model.TestUtilities;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.invocation.InvocationOnMock;
@@ -25,7 +26,7 @@ import static org.mockito.Mockito.when;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-
+@Tag("IntegrationTest")
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 public class AccountServiceTest {
@@ -39,9 +40,7 @@ public class AccountServiceTest {
 
     @BeforeEach
     public void setMockSaveOutput() {
-        Answer<?> returnParameterAsAnswer = (InvocationOnMock invocation) -> {
-            return invocation.getArgument(0);
-        };
+        Answer<?> returnParameterAsAnswer = (InvocationOnMock invocation) -> invocation.getArgument(0);
         when(accountRepository.save(any(Account.class))).thenAnswer(returnParameterAsAnswer);
 
     }

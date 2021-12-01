@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import ECSE428Project.dao.QuestionRepository;
 import ECSE428Project.model.Question;
 
+@Tag("IntegrationTest")
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 public class QuestionServiceTest {
@@ -37,9 +39,7 @@ public class QuestionServiceTest {
 		question.setId(EXISTING_ID);
 		when(questionRepository.findById(EXISTING_ID)).thenReturn(Optional.of(question));
 		
-		when(questionRepository.save(any(Question.class))).thenAnswer(obj -> {
-			return obj.getArgument(0);
-		});
+		when(questionRepository.save(any(Question.class))).thenAnswer(obj -> obj.getArgument(0));
 	}
 	
 	@Test
