@@ -3,12 +3,14 @@ package ECSE428Project.service;
 import ECSE428Project.dao.AccountRepository;
 import ECSE428Project.dao.LeaderboardRepository;
 import ECSE428Project.model.Account;
+import ECSE428Project.model.Leaderboard;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
@@ -121,6 +123,12 @@ public class AccountService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This is not a valid email address");
         }
 
+        // Check that the new email is not already in use
+        Optional<Account> newAccountCheck = accountRepository.findById(newEmail);
+        if (newAccountCheck.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This email address is already used");
+        }
+
         if (opt.isPresent()) {
             account = opt.get();
 
@@ -133,6 +141,12 @@ public class AccountService {
 
                 // Save the new account to the database
                 newAccount = accountRepository.save(newAccount);
+
+                List<Leaderboard> leaderboards = leaderboardRepository.findLeaderboardByAccountEmail(account.getEmail());
+                for(Leaderboard leaderboard : leaderboards) {
+                    leaderboard.setAccountEmail(newAccount.getEmail());
+                    leaderboardRepository.save(leaderboard);
+                }
 
                 // Delete the account with the old email
                 accountRepository.delete(account);
@@ -152,10 +166,7 @@ public class AccountService {
   @Transactional
   public boolean validatePassword(String email, String password) {
 	  Optional<Account> optAccount = accountRepository.findById(email);
-	  if(optAccount.isPresent() && optAccount.get().getPassword().equals(password)) {
-		  return true;
-	  }
-	  return false;
+      return optAccount.isPresent() && optAccount.get().getPassword().equals(password);
   }
 
   @Transactional
