@@ -556,6 +556,6 @@ public class AccountControllerTest {
                         .param("rank", rank)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
-                .andExpect(status().reason("This account does not exist"));
+                .andExpect(status().reason("This account does exist"));
     }
 }
